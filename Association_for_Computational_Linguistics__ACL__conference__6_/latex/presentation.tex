@@ -1,0 +1,461 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+
+% Theme selection
+\usetheme{Madrid}
+\usecolortheme{default}
+\usefonttheme{professionalfonts}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[edges]{forest}
+\usetikzlibrary{shadows,arrows.meta,positioning,calc}
+\usepackage{amsmath}
+\usepackage{xcolor}
+
+% Custom colors
+\definecolor{accentblue}{HTML}{1B2A4A}
+\definecolor{highlightred}{HTML}{E91E63}
+\definecolor{successgreen}{HTML}{16A085}
+\definecolor{warnorange}{HTML}{F39C12}
+
+% Information for Title Page
+\title[Under the Shadow of Babel]{Under the Shadow of Babel}
+\subtitle{A Position Survey on Linguistic Relativity and Strategic Deception in Multilingual LLM Games}
+\author[Anonymous]{Anonymous Authors}
+\institute[EMNLP]{Association for Computational Linguistics --- EMNLP 2026}
+\date{\today}
+
+\begin{document}
+
+% =====================================================
+% Slide 1: Title
+% =====================================================
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% =====================================================
+% Slide 2: Outline
+% =====================================================
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+% =====================================================
+% SECTION 1: MOTIVATION
+% =====================================================
+\section{Motivation \& Core Hypothesis}
+
+\begin{frame}{The Epistemological Gap}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \textbf{LLMs are no longer static Q\&A engines.}\\[6pt]
+            They now \textit{negotiate}, \textit{deceive}, and \textit{collaborate} as autonomous agents in Multi-Agent Systems (MAS).
+            \vspace{0.4cm}
+
+            \begin{alertblock}{The Problem}
+                Safety guardrails and RLHF pipelines are overwhelmingly optimized for \textbf{English}---yet weaken dramatically in interactive, multilingual environments.
+            \end{alertblock}
+
+            \vspace{0.2cm}
+            \textbf{Result:} An ``\textcolor{highlightred}{Illusion of Alignment}''---models \textit{appear} safe in English but behave differently in non-English multi-agent realities.
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{block}{Key Question}
+                \centering
+                \textit{Does language merely \textbf{carry} thought,\\or does it actively \textbf{reshape} it?}
+            \end{block}
+            \vspace{0.3cm}
+            \footnotesize
+            \textbf{Scope of this survey:}
+            \begin{itemize}
+                \item 7 game categories
+                \item 80+ papers synthesized
+                \item Contradictory evidence engaged
+                \item Concrete benchmark proposed
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{The ``Algorithmic Sapir-Whorf Switch''}
+    \begin{block}{Working Hypothesis \textit{(Wang et al., 2025)}}
+        Language acts as an \textbf{active switch} that reconfigures internal representations, modulating strategic intent, Theory of Mind, and deceptive capacity.
+    \end{block}
+    \vspace{0.3cm}
+    \textbf{Two Mechanistic Pillars:}
+    \begin{enumerate}
+        \item \textbf{Semantic Hub Hypothesis} \textit{(Wu et al., 2024):}
+        \begin{itemize}
+            \item Non-English inputs undergo \textbf{lossy compression} into an English-dominant hub in intermediate layers.
+            \item Steering these hubs requires substantially higher intensity for non-English contexts.
+        \end{itemize}
+        \vspace{0.2cm}
+        \item \textbf{Translation Barrier Hypothesis} \textit{(Bafna et al., 2025):}
+        \begin{itemize}
+            \item Reasoning may be \textit{correct internally}---but fails during the final projection into the target language's token space.
+            \item Implication: some failures are ``\textbf{last-mile}'' errors, not reasoning deficits.
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+% =====================================================
+% SECTION 2: GAME TAXONOMY
+% =====================================================
+\section{Empirical Evidence: Game Taxonomy}
+
+\begin{frame}{Taxonomy of Multilingual LLM Games}
+    \definecolor{rootcol}{HTML}{1B2A4A}
+    \definecolor{groupA_bg}{HTML}{FADADD}
+    \definecolor{groupA_border}{HTML}{E91E63}
+    \definecolor{groupB_bg}{HTML}{FEF9E7}
+    \definecolor{groupB_border}{HTML}{F39C12}
+    \definecolor{groupC_bg}{HTML}{F4ECF7}
+    \definecolor{groupC_border}{HTML}{8E44AD}
+    \definecolor{groupD_bg}{HTML}{E8F8F5}
+    \definecolor{groupD_border}{HTML}{16A085}
+    \vspace*{-0.5cm}
+    \resizebox*{!}{\dimexpr 0.82\textheight\relax}{
+    \begin{forest}
+    for tree={
+      grow'=east,
+      forked edges,
+      draw,
+      rounded corners=2pt,
+      font=\tiny,
+      inner xsep=3pt,
+      inner ysep=2pt,
+      l sep=4mm,
+      s sep=0.5mm,
+      fork sep=2mm,
+      edge={thick, -{Stealth[length=2.5pt]}},
+      align=left,
+      if n children={0}{
+        text width=7.5cm,
+        fill=gray!5,
+        draw=gray!30,
+      }{
+        fill=white,
+      },
+    }
+    [{\textbf{\normalsize Multilingual LLM Games}\\[-1pt]\scriptsize Position Survey Architecture}, 
+      fill=rootcol, text=white, inner ysep=6pt
+      [{\textbf{Game Taxonomy} \S2}, fill=groupA_bg!30, draw=groupA_border,
+        [{\textbf{Social Deduction}}, fill=groupA_bg!10, draw=groupA_border!50,
+          [{Werewolf (Xu '23), Avalon (Wang '23; Lan '24),\\ Spyfall (Koto '25)}]
+        ]
+        [{\textbf{Negotiation}}, fill=groupA_bg!10, draw=groupA_border!50,
+          [{Diplomacy (Meta '22), Bargaining (Deng '24),\\ SPIN-Bench (Yao '25)}]
+        ]
+        [{\textbf{Persuasion}}, fill=groupA_bg!10, draw=groupA_border!50,
+          [{Charitable Ads (Arango '24), AucArena (Chen '24),\\ Anecdoctoring (Lucas '25)}]
+        ]
+        [{\textbf{Cooperative}}, fill=groupA_bg!10, draw=groupA_border!50,
+          [{Codenames (Hakimov '25), Hanabi (Chen '25),\\ XToM (Chan '25), Overcooked (Sun '25)}]
+        ]
+        [{\textbf{Open-World}}, fill=groupA_bg!10, draw=groupA_border!50,
+          [{Voyager (Wang '24), BALROG (Paischer '24),\\ TCG-Bench (Wang '25), GVGAI-LLM (Chen '25)}]
+        ]
+        [{\textbf{Dialogue}}, fill=groupA_bg!10, draw=groupA_border!50,
+          [{clembench (Schlangen '25), Price of Thought\\ (Hakimov '26)}]
+        ]
+        [{\textbf{Social Dilemmas}}, fill=groupA_bg!10, draw=groupA_border!50,
+          [{IPD (Huynh '26), FAIRGAME (Buscemi '25),\\ M3-BENCH (Xie '26), Ultimatum (Akata '25)}]
+        ]
+      ]
+      [{\textbf{Mechanistic Pillars} \S3}, fill=groupB_bg, draw=groupB_border,
+        [{\textbf{Representation}}, fill=groupB_bg!50, draw=groupB_border!50,
+          [{Semantic Hub (Wu '24),\\ Translation Barrier (Bafna '25),\\ Logit Lens (Wendler '24)}]
+        ]
+        [{\textbf{Dynamics}}, fill=groupB_bg!50, draw=groupB_border!50,
+          [{ActAdd Steering (Turner '23),\\ Low-Resource (Yong '24), Framing (Lore '24)}]
+        ]
+      ]
+      [{\textbf{Threats \& Risks} \S3.5}, fill=groupC_bg, draw=groupC_border,
+        [{\textbf{Adversarial}}, fill=groupC_bg!50, draw=groupC_border!50,
+          [{CSRT (Yoo '25), AutoRed (Diao '25),\\ AiTM (He '25), Genesis (Zhang '25)}]
+        ]
+        [{\textbf{Collusion}}, fill=groupC_bg!50, draw=groupC_border!50,
+          [{Audit-Whisper (Roger '25),\\ X-SIR (He '24)}]
+        ]
+      ]
+      [{\textbf{Evaluation} \S5}, fill=groupD_bg, draw=groupD_border,
+        [{\textbf{Reliability}}, fill=groupD_bg!50, draw=groupD_border!50,
+          [{LLM-as-Judge (Fu '25),\\ Ensemble Judging Protocol}]
+        ]
+        [{\textbf{Metrics}}, fill=groupD_bg!50, draw=groupD_border!50,
+          [{MAST (Cemri '25), MultiAgentBench (Nie '25),\\ M3-BENCH (Xie '26)}]
+        ]
+      ]
+    ]
+    \end{forest}
+    }
+    \vspace*{-0.2cm}
+\end{frame}
+
+% =====================================================
+% KEY FINDINGS
+% =====================================================
+
+\begin{frame}{Striking Findings Across Game Categories}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\textcolor{highlightred}{Planning $\neq$ Social Intelligence}}\\
+            {\small SPIN-Bench: o3-mini excels at PDDL planning (51\%) but \textit{fails} intention inference; Claude inverts this entirely.}
+            \vspace{0.3cm}
+
+            \textbf{\textcolor{warnorange}{``Nicer Than Humans''}}\\
+            {\small LLMs cooperate at $\sim$80\% vs. human baseline of 48\% in IPD---but this masks dark behaviors beneath the surface.}
+            \vspace{0.3cm}
+
+            \textbf{\textcolor{accentblue}{Cultural Blindness in Cooperation}}\\
+            {\small Codenames: non-English clues driven by phonetic similarity instead of conceptual association.}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \textbf{\textcolor{successgreen}{ToM Degrades Across Languages}}\\
+            {\small XToM: BERTScore drops measurably English$\to$Chinese; recursive ``A believes B intends\ldots'' collapses.}
+            \vspace{0.3cm}
+
+            \textbf{\textcolor{highlightred}{Open-World: Linguistic Chasm Grows}}\\
+            {\small TCG-Bench: English--Arabic gap reaches $\sim$47\% at 32B scale---\textit{growing} with model size.}
+            \vspace{0.3cm}
+
+            \textbf{\textcolor{warnorange}{Dialogue: Format $\neq$ Strategy}}\\
+            {\small clembench: Non-English failures are primarily \textit{structural} (formatting, looping), not strategic.}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Contradictory Evidence \& Boundary Conditions}
+    \textbf{We engage with the friction, not just the narrative:}
+    \vspace{0.2cm}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Surprising Strategy Shifts \textit{(Huynh et al., 2026)}}
+                \begin{itemize}
+                    \item \textbf{Arabic:} Volatile bimodal distribution (32\% Co-op vs 28\% Defect)---not consistent defection.
+                    \item \textbf{Vietnamese:} Subverts collectivist expectations with high defection rates.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{Persuasion Null Result \textit{(Arango et al., 2024)}}
+                A rigorous cross-lingual study found \textit{no significant effect} of language on human behavioral outcomes.\\[4pt]
+                \textbf{Why?} Human metacognition (``source suspicion'') overrides linguistic manipulation.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \textit{$\Rightarrow$ These contradictions are best explained by \textbf{mechanistic architecture}, not cultural essentialism.}
+    \end{center}
+\end{frame}
+
+% =====================================================
+% SECTION 3: MECHANISTIC EXPLANATION
+% =====================================================
+\section{Mechanistic Foundations}
+
+\begin{frame}{The Semantic Hub \& Translation Barrier}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \textbf{Inside the Model:}
+            \begin{enumerate}
+                \item Input in any language enters the model
+                \item Intermediate layers compress to an \textbf{English-dominant hub}
+                \item Strategic reasoning is computed in hub
+                \item Output is \textbf{projected back} to target language
+            \end{enumerate}
+            \vspace{0.2cm}
+            \textbf{Two failure modes:}
+            \begin{itemize}
+                \item \textcolor{highlightred}{\textbf{Hub failure:}} Input too lossy $\Rightarrow$ reasoning degrades (Arabic bimodality, Vietnamese math errors)
+                \item \textcolor{warnorange}{\textbf{Barrier failure:}} Reasoning correct but ``last-mile'' projection fails (clembench formatting errors in German/Italian)
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{block}{Calibration Crisis}
+                \centering
+                \textbf{ECE degrades $\sim$5$\times$}\\[6pt]
+                \begin{tabular}{lc}
+                    \toprule
+                    \textbf{Language} & \textbf{ECE} \\
+                    \midrule
+                    English & 4.6\% \\
+                    Non-English & 23.1\% \\
+                    \bottomrule
+                \end{tabular}\\[8pt]
+                {\small Models are \textit{confidently wrong} in non-English contexts.}
+            \end{block}
+            \vspace{0.2cm}
+            \begin{block}{Recovery}
+                {\small LACE: sampling from late-intermediate layers bypasses final-layer noise.}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =====================================================
+% SECTION 4: THREATS
+% =====================================================
+\section{Emerging Threats}
+
+\begin{frame}{Language as a Compound Attack Vector}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\textcolor{highlightred}{Code-Switching Red-Teaming (CSRT)}}\\
+            {\small \textit{Yoo et al., 2025}}
+            \begin{itemize}
+                \item Intra-sentential code-mixing \textbf{nearly doubles} Attack Success Rate
+                \item vs.\ Claude 3 Haiku: 9\% ASR vs 2.4\% English baseline
+                \item Exploits the Semantic Hub bottleneck \textit{below} input-layer sanitization
+            \end{itemize}
+            \vspace{0.2cm}
+            \textbf{\textcolor{warnorange}{Broader Red-Teaming Ecosystem:}}
+            \begin{itemize}
+                \item AutoRed: RL-driven persona attacks
+                \item OpenRT: multi-turn compound pressure
+                \item Genesis: evolving web-agent exploits
+                \item M2S: multi-strategy composition
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \textbf{\textcolor{accentblue}{Agent-in-the-Middle (AiTM)}}\\
+            {\small \textit{He et al., 2025}}
+            \begin{itemize}
+                \item Intercepts \& manipulates inter-agent messages in MAS
+                \item Combined with code-switching: manipulates \textit{both} content and language framing
+            \end{itemize}
+            \vspace{0.3cm}
+            \textbf{\textcolor{successgreen}{Steganographic Collusion}}\\
+            {\small \textit{Roger et al., 2025; He et al., 2024}}
+            \begin{itemize}
+                \item Risk of covert out-of-band communication
+                \item Audit-Whisper: 0.819 AUROC for detection
+                \item X-SIR: robust under cross-lingual watermark removal
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =====================================================
+% SECTION 5: EVALUATION CRISIS
+% =====================================================
+\section{Evaluative Validity}
+
+\begin{frame}{The Multilingual Judge Problem}
+    \begin{alertblock}{Evaluative Fragility \textit{(Fu et al., 2025)}}
+        Single-judge LLM-as-Judge reliability collapses to \textbf{Fleiss' $\kappa \approx 0.3$} across languages---barely above chance (``fair to poor'' agreement).
+    \end{alertblock}
+    \vspace{0.3cm}
+    \textbf{Our Recommended Protocol for Robust Ensemble Judging:}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{enumerate}
+                \item \textbf{Judge Panel:} $\geq 3$ judges from \textit{distinct} model families (e.g., GPT-4o, Claude, Gemini)
+                \item \textbf{Self-Translation:} Non-English transcripts $\to$ English before scoring {\scriptsize (recovers $\sim$40\% of $\kappa$ gap)}
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{enumerate}
+                \setcounter{enumi}{2}
+                \item \textbf{Checklist Rubrics:} Binary sub-criteria replace holistic Likert scales
+                \item \textbf{Weighted Voting:} Abstention on low-confidence items, no same-lineage ensembles
+            \end{enumerate}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        {\small Three-judge panels + checklist rubrics push effective $\kappa > 0.5$ (``moderate'' agreement).}
+    \end{center}
+\end{frame}
+
+% =====================================================
+% SECTION 6: BENCHMARK PROPOSAL
+% =====================================================
+\section{The Path Forward}
+
+\begin{frame}{Cross-Cultural Agentic Sandbox Benchmark}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{Design Principles:}
+            \begin{itemize}
+                \item \textbf{Confound Control:} Ablate tokenizers, RLHF coverage, decoding parameters
+                \item \textbf{Intent--Action Logs:} Human-annotated gold standards per language
+                \item \textbf{Pre-registered Protocols:} Strategy classifiers with per-language calibration curves
+                \item \textbf{Intermediate-Layer Probes:} Diagnose Hub vs.\ Barrier failures
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \textbf{Minimal Viable Benchmark (MVB):}
+            \begin{itemize}
+                \item \textbf{8 Languages:} EN, FR, AR, ZH, VI, SW, HI, TR
+                \item \textbf{3 Game Genres:} IPD, clembench, Codenames
+                \item \textbf{3 Models:} GPT-4o, LLaMA-3-70B, Aya-Expanse
+                \item \textbf{Adversaries:} Intra-sentential CSRT
+                \item \textbf{Budget:} $<$\$15K total
+            \end{itemize}
+            \vspace{0.2cm}
+            {\small Covers 5 scripts, 4 morphological types, and diverse RLHF coverage tiers.}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =====================================================
+% SECTION 7: CONCLUSION
+% =====================================================
+\section{Conclusion}
+
+\begin{frame}{Key Takeaways}
+    \begin{enumerate}
+        \item \textbf{Language modulates strategic behavior.} It is an active variable---not a passive conduit---in multi-agent systems.
+        \vspace{0.2cm}
+        \item \textbf{Contradictions are informative.} Bimodal Arabic, cooperative Vietnamese, and a persuasion null result constrain our claims and point to mechanistic, not cultural, explanations.
+        \vspace{0.2cm}
+        \item \textbf{Two failure modes explain the spectrum.} Hub-level representational sparsity (upstream) and Translation Barrier realization errors (downstream) cover different failure signatures.
+        \vspace{0.2cm}
+        \item \textbf{Standard evaluation is broken.} $\kappa \approx 0.3$ means single-judge LLM evaluation in multilingual settings is unreliable. Ensemble protocols are mandatory.
+        \vspace{0.2cm}
+        \item \textbf{We need interactive, multilingual, culture-aware sandboxes}---with pre-registered diagnostics, compound adversaries, and confound controls.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Contributions at a Glance}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{Conceptual:}
+            \begin{itemize}
+                \item ``Algorithmic Sapir-Whorf Switch'' hypothesis
+                \item First survey uniting behavioral + mechanistic evidence across 7 game categories
+                \item Honest integration of contradictory evidence
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \textbf{Practical:}
+            \begin{itemize}
+                \item Ensemble judging protocol (Appendix E)
+                \item Pre-registered Hub/Barrier diagnostic (Appendix D)
+                \item Minimal Viable Benchmark design (\$15K)
+                \item Reference registry for reproducibility (Appendix G)
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+        \Huge \textbf{Thank You!} \\
+        \vspace{0.5cm}
+        \large Questions \& Discussion \\
+        \vspace{0.5cm}
+        \normalsize
+        \textit{Code, data, and benchmark registry:}\\
+        \texttt{https://osf.io/[REDACTED]}
+    \end{center}
+\end{frame}
+
+\end{document}

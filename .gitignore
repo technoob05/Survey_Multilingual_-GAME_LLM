@@ -1,0 +1,29 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.bbl
+*.blg
+*.out
+*.toc
+*.nav
+*.snm
+*.vrb
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.lof
+*.lot
+*.idx
+*.ind
+*.ilg
+*.bcf
+*.run.xml
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Archives (prefer unpacked sources)
+Royal_Society_Interface___LaTeX_Template.zip
