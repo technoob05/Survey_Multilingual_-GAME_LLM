@@ -1,140 +1,210 @@
-%% V1.0
-%% 2021/28/11
-%% Developed by Alex Giménez Romero on top of a Techset developed templates (https://es.overleaf.com/latex/templates/royal-society-open-science-template/mxtbwxgrjmtj, https://es.overleaf.com/latex/templates/proceedings-of-the-royal-society-a-latex-template/zskbvgrsmmcv)
+%% Babel's Machines — Royal Society Interface Focus perspective
+%% Adapted from ACL position survey (2026) on multilingual LLM games
+%% Template: rsproca_new (Royal Society open access)
 
-\documentclass[openacc]{rsproca_new}%%%%where rsproca is the template name
+\documentclass[openacc]{rsproca_new}
 
-%Add here your packages or commands
-\usepackage{lipsum}
 \usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{float}
 
 \addbibresource{refs.bib}
 
-%%%% *** Do not adjust lengths that control margins, column widths, etc. ***
-
-%%%%%%%%%%% Defining Enunciations  %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newtheorem{theorem}{\bf Theorem}[section]
 \newtheorem{condition}{\bf Condition}[section]
 \newtheorem{corollary}{\bf Corollary}[section]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \jname{rsif}
-\Journal{J R Soc Interface\ }
+\Journal{Interface Focus\ }
 
 \begin{document}
 
-%%%% Article title to be placed here
-\title{Add your title here}
+\title{Babel's Machines: Linguistic Relativity, Cooperation, and the Emerging Behaviour of Multilingual Artificial Agents}
 
-\author{%%%% Author details
-Author 1$^{1}$, Author 2$^{2,1}$, Author 3$^{1}$, Author 4$^{1}$}
+\author{%
+Dao Sy Duy Minh$^{1,*}$,
+Vu Nguyen$^{1}$,
+[Co-author TBC]$^{2}$}
 
-%%%%%%%%% Insert author address here
-\address{$^{1}$Address 1\\
-$^{2}$Address 2}
+\address{%
+$^{1}$Faculty of Information Technology, University of Science, Vietnam National University, Ho Chi Minh City, Vietnam\\
+$^{2}$[Affiliation pending]}
 
-%%%% Subject entries to be placed here %%%%
-\subject{xxxxx, xxxxx, xxxx}
+\subject{artificial intelligence, behavioural science, evolutionary game theory}
 
-%%%% Keyword entries to be placed here %%%%
-\keywords{xxxx, xxxx, xxxx}
+\keywords{large language models, multi-agent systems, linguistic relativity, cooperation, theory of mind, machine behaviour}
 
-%%%% Insert corresponding author and its email address}
-\corres{Corresponding author\\
-\email{corresponding.author@whatever}}
+\corres{Dao Sy Duy Minh\\
+\email{dsdminh22@apcs.fitus.edu.vn}}
 
-%%%% Abstract text to be placed here %%%%%%%%%%%%
 \begin{abstract}
-
-    \lipsum[1-4]
-
+Large language model (LLM) agents are transitioning from query engines to autonomous participants in negotiations, coalitions, and social dilemmas. A striking empirical pattern is emerging across this new behavioural substrate: strategic dispositions, theory-of-mind performance, and cooperative tendencies shift systematically with the language of interaction --- what recent work has called an ``Algorithmic Sapir--Whorf Switch''. This perspective synthesises three converging lines of inquiry to argue that language is not a passive interface for machine agents but an active modulator of their behaviour. First, we characterise the behavioural phenotype: cooperation rates, defection patterns, and commitment reliability vary across languages, including a ``nicer than human'' prosocial bias ($\sim 79\%$ cooperation, well above the $\sim 48\%$ human baseline) that is itself language-dependent. Second, we connect these shifts to mechanistic accounts --- the Semantic Hub and Translation Barrier hypotheses from interpretability research --- and to cognitive findings on multilingual theory-of-mind deficits in benchmarks such as XToM. Third, we situate LLM cooperation within the evolutionary game-theoretic tradition of Axelrod and contemporary cultural-evolution research, asking how language-modulated machine behaviour will shape, and be shaped by, the multilingual human institutions into which these agents are deployed. We foreground contradictory evidence --- a cross-lingual persuasion study reporting null effects on human outcomes, bimodal Arabic strategy distributions, and Vietnamese subverting collectivist priors --- to caution against cultural essentialism and to motivate a science of multilingual machine behaviour. We close with open questions on alignment, evaluation reliability, and the co-evolution of LLM agents with diverse human linguistic communities.
 \end{abstract}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%% Insert the texts which can accomdate on firstpage in the tag "fmtext" %%%%%
 
 \begin{fmtext}
-
-    \lipsum[1]
-    
 \end{fmtext}
-
-%%%%%%%%%%%%%%% End of first page %%%%%%%%%%%%%%%%%%%%%
 
 \maketitle
 
 \begin{multicols}{2}
 
-\section{Introduction}
+\section{Introduction: Machine Behaviour Meets Babel}
+\label{sec:intro}
 
-    \lipsum[1]
-    
-    \lipsum[1]\cite{McKendrick}
-    
-    \lipsum[1]\cite{Filipe2003, Brauer2008, Cross2005}
-    
-\section{Methods}
+A generation of computational models that once produced text on demand now \emph{acts}: LLM agents negotiate trades, allocate resources, deceive opponents in social-deduction games, and collaborate on open-ended tasks over hours-long horizons \cite{meta2022cicero, wang2024voyager, huynh2026moreatstake, sun2025gametheoryllm}. This transition invites, and arguably requires, a new research programme: the \emph{machine-behaviour} paradigm proposed by Rahwan and colleagues \cite{rahwan2019machinebehaviour}, which treats AI systems as a class of behaving agents whose ethology must be studied empirically, with tools drawn from biology, economics, cognitive science and the social sciences, rather than solely from the engineering discipline that built them.
 
-    \begin{theorem}\label{T0.1}
-        Assume that $\alpha>0, \gamma>1, \beta>\frac{\gamma+1}{\gamma-1}$.
-        Then there exists a small $\tau_1>0$, such that for $\tau\in
-        [0,\tau_1)$, if $c$ crosses $c(\tau)$ from the direction of
-        to  a small amplitude periodic traveling wave solution of
-        (2.1), and the period of $(\check{u}^p(s),\check{w}^p(s))$ is
-        \[
-        \check{T}(c)=c\cdot \left[\frac{2\pi}{\omega(\tau)}+O(c-c(\tau))\right].
-        \]
-    \end{theorem}
-    
-    
-    \begin{condition}\label{C2.2}
-        From (0.8) and (2.10), it holds
-        $\frac{d\omega}{d\tau}<0,\frac{dc}{d\tau}<0$ for $\tau\in
-        [0,\tau_1)$. This fact yields that the system (2.1) with delay
-        $\tau>0$ has the periodic traveling waves for smaller wave speed $c$
-        than that the system (2.1) with $\tau=0$ does. That is, the
-        delay perturbation stimulates an early occurrence of the traveling waves.
-    \end{condition}
+This perspective advances a specific thesis within that programme. Multilingual LLM agents are \emph{linguistically relative actors}: their cooperative tendencies, deceptive capacities, and theory-of-mind performance shift with the language they are asked to inhabit. We call this the \emph{Algorithmic Sapir--Whorf Switch}, following recent empirical work \cite{wang2025babel}: not the strong Whorfian claim that language determines thought, but the weaker, mechanistically grounded claim that language-specific representations inside pretrained models modulate the policies those models execute in interactive environments. The claim is empirical, not metaphysical, and we devote considerable attention to contradictory evidence and confounds.
 
-\section{Results}
+The question matters for three reasons that map onto the goals of this journal's call for papers on the science of machine behaviour. First, \emph{empirical characterisation}: we need to describe how LLM agents act and interact under varied linguistic pressure, because deployment is global and multilingual by default. Second, \emph{social and cognitive models}: concepts of trust, cooperation, reciprocity, theory of mind, and cultural evolution --- developed over decades to understand humans and other animals --- are being silently re-instantiated in machine populations \cite{axelrod1984evolution, tomasello2009whywecooperate, henrich2016secret}. Third, and most consequential, \emph{societal dynamics}: LLMs are already embedded in multilingual institutions --- customer service, education, public-sector information access, especially in the Global South --- and their language-modulated behaviour will reshape human groups in ways we barely measure.
 
-    \lipsum[1]
+We organise the perspective around these three goals. Section~\ref{sec:taxonomy} sketches the interactive substrate in which these behaviours arise. Section~\ref{sec:relativity} develops the linguistic-relativity hypothesis, foregrounding convergent \emph{and} contradictory evidence. Section~\ref{sec:mechanism} offers mechanistic explanations (Semantic Hub, Translation Barrier) that replace cultural essentialism with architectural reasoning. Section~\ref{sec:cognition} examines theory of mind across languages. Section~\ref{sec:evolution} places these findings in an evolutionary and cultural-evolution frame. Section~\ref{sec:society} turns to societal implications and the research agenda. We close with what we see as the most consequential open questions.
 
-    \begin{equation}
-        H=\int\frac{1}{2}mv
-    \end{equation}
-    
-    \lipsum[1]
+\section{An Interactive Substrate}
+\label{sec:taxonomy}
+
+To speak of machine \emph{behaviour}, rather than machine \emph{performance}, we need a substrate richer than single-turn question answering. Recent literature has converged, roughly, on seven families of interactive environments in which LLM agents are now regularly evaluated.
+
+\emph{Social-dilemma games} (Iterated Prisoner's Dilemma, Public Goods, Ultimatum) provide the mathematically purest view of cooperation, trust, and reciprocity \cite{huynh2026moreatstake, akata2025playing, buscemi2025fairgame}. \emph{Negotiation and diplomacy} (Diplomacy, bargaining games, SPIN-Bench) test persuasion and coalition formation under partial information \cite{meta2022cicero, deng2024bargaining, yao2025spinbench}. \emph{Persuasion and auction} environments probe rhetorical influence and strategic bidding \cite{arango2024persuasion, chen2024aucarena}. \emph{Social-deduction games} (Werewolf, Avalon, Spyfall) demand deception and recursive mental-state modelling \cite{xu2023werewolf, wang2023avalon, koto2025spyfall}. \emph{Cooperative communication games} (Codenames, Hanabi, Overcooked) require shared cultural and referential ground \cite{hakimov2025codenames, chen2025llmhanabi, sun2025overcooked}. \emph{Open-world and video-game environments} (Minecraft via Voyager, BALROG, GVGAI-LLM) test long-horizon planning in grounded worlds \cite{wang2024voyager, paischer2024balrog, chen2025gvgai}. \emph{Dialogue-game frameworks} such as clembench provide the most controlled multilingual evaluation, separating format adherence from strategic competence \cite{chalamalasetti2023clembench, beyer2024clembench, schlangen2025clembench}.
+
+Two observations matter for the argument that follows. First, these environments produce \emph{behaviours}, not just answers: commitments honoured or broken, beliefs propagated or manipulated, coalitions joined or abandoned. Second, every one of these environments has now been run in multiple languages, and every one of them has reported language-dependent divergence --- including the ``nicer than human'' cooperation phenomenon \cite{fontana2024nicer, za2026towards} and the dramatic English-to-Arabic performance gap in TCG-Bench that \emph{widens} with model size \cite{wang2025tcgbench}.
+
+\section{The Linguistic-Relativity Hypothesis for Machines}
+\label{sec:relativity}
+
+The classical hypothesis of linguistic relativity, associated with Sapir, Whorf, and a century of experimental follow-ups, holds that the language one speaks shapes the cognitive categories one easily forms and deploys \cite{boroditsky2001does, boroditsky2011languageshapes}. Contemporary research has moved past the strong determinist reading toward a measured view: language provides \emph{cognitive affordances}, subtly biasing attention, memory, and decision-making without dictating them.
+
+We propose that an analogous effect operates in multilingual LLMs. Pretraining on unbalanced, largely English-dominant corpora \cite{brown2020gpt3, vaswani2017transformer}, followed by reinforcement learning from human feedback (RLHF) whose safety and value data are themselves linguistically skewed \cite{ouyang2022training, bai2022constitutional, repello2024multilingualguardrails}, produces models whose internal representations encode a language-specific inductive bias. When prompted in a different language, the resulting policy shifts.
+
+\subsection{Cross-Lingual Divergence in Social Dilemmas}
+
+High-resolution data from iterated social dilemmas illustrates the phenomenon (Table~\ref{tab:strategy}). Across four model families evaluated in five languages, strategy distributions differ meaningfully, but not in ways that map cleanly onto folk-cultural stereotypes \cite{huynh2026moreatstake, huynh2025fairgame, za2026towards}.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Language} & \textbf{ALLC} & \textbf{ALLD} & \textbf{TFT} & \textbf{WSLS} \\
+\midrule
+English & 26\% & 25\% & 25\% & 24\% \\
+French & 27\% & 18\% & 26\% & 29\% \\
+Arabic & 32\% & 28\% & 19\% & 21\% \\
+Chinese & 31\% & 30\% & 19\% & 20\% \\
+Vietnamese & 26\% & 24\% & 23\% & 27\% \\
+\bottomrule
+\end{tabular}
+\caption{IPD strategy distributions aggregated across four LLM families \cite{huynh2026moreatstake, za2026towards}; LSTM classifier confidence $\geq 0.6$. These are model--language interaction effects, not properties of languages.}
+\label{tab:strategy}
+\end{table}
+
+Three patterns deserve emphasis. Arabic produces \emph{both} the highest unconditional cooperation (32\%) \emph{and} the second-highest unconditional defection (28\%) --- a bimodal, volatile distribution rather than monotonic competitiveness. Vietnamese, often assumed to prime collectivist behaviour, sometimes yields high defection, with cooperative priming collapsing to 2\% cooperation in Claude 3.5 Haiku \cite{huynh2025fairgame}. Chinese favours Win-Stay-Lose-Shift over Tit-for-Tat, an outcome-dependent rather than reciprocity-dependent style. Layered on top, model-family effects are substantial: GPT-4o runs ``hawkish'' (aggregate ALLD $\approx 31.7\%$) while Mistral runs ``dovish'' (aggregate ALLC $\approx 33.7\%$) \cite{huynh2026moreatstake}.
+
+\subsection{The ``Nicer than Human'' Finding}
+
+Against these divergences sits a baseline finding that has not received the attention it deserves from the machine-behaviour community. LLMs in one-shot and iterated social dilemmas default to \emph{prosocial} play at rates far above human baselines --- cooperation rates of $\sim 79\%$ in controlled IPD comparisons, against a historical human rate of $\sim 48\%$ \cite{fontana2024nicer, za2026towards, wang2026discovering}. This is striking evolutionarily: thirty years of agent-based models following Axelrod \cite{axelrod1984evolution} suggest that stable cooperation requires repeated interactions, reputation, and punishment. LLM cooperation is observed even when these scaffolds are weak, suggesting that cultural inheritance via pretraining produces a default disposition that evolutionary game theory would not predict from interaction structure alone. We return to this in Section~\ref{sec:evolution}.
+
+\subsection{Contradictory Evidence and Confounds}
+\label{sec:confounds}
+
+A responsible account of linguistic relativity in machines must foreground the evidence against it. Three findings are central. First, in a rigorous cross-lingual persuasion study, \citeauthor{arango2024persuasion} \cite{arango2024persuasion} find \emph{no significant effect} of LLM-authored versus human-authored charitable appeals on human persuasive outcomes across English and German. Human recipients anchor on source belief (``did an AI write this?'') rather than linguistic nuance. Second, when game horizons are unknown, cooperation \emph{universalises} across all languages \cite{buscemi2025fairgame, lore2024framing}: framing effects can fully dominate language effects. Third, apparent Vietnamese ``defection'' in low-stakes rounds sometimes reflects arithmetic miscomprehension under attenuated payoffs rather than strategic intent \cite{huynh2025fairgame}.
+
+These findings bound the claim. Language effects exist, but they interact with framing, stakes, and task structure; they do not operate as a fixed cultural dial. Confounds are equally serious: tokeniser quality differs sharply across languages \cite{yong2024lowresource}, RLHF safety coverage is skewed \cite{ouyang2022training, yong2025multilingualsafety}, training corpora are unevenly distributed, and decoding hyperparameters interact with language-specific token statistics. Any causal claim about ``language X produces behaviour Y'' must be disentangled from these.
+
+\section{Mechanism: Semantic Hub and Translation Barrier}
+\label{sec:mechanism}
+
+Two complementary accounts from mechanistic interpretability provide the machine-behaviour explanation for these patterns, and crucially for reviewers, dispense with the need for cultural-essentialist reasoning.
+
+The \emph{Semantic Hub Hypothesis} \cite{wu2024semantichub}, supported by logit-lens decoding \cite{wendler2024llamasenglish}, holds that multilingual LLMs project heterogeneous linguistic inputs into a centralised, English-dominant representational hub in intermediate layers. Non-English inputs undergo lossy compression before strategic conclusions are computed in English-anchored hidden states. Activation Addition (ActAdd) experiments offer suggestive functional evidence: English-derived steering vectors require scaling coefficients approximately 2--3$\times$ larger to alter non-English outputs \cite{wu2024semantichub, turner2023actadd}. We note that these coefficients are reported on a limited set of model families and layers, and require independent replication.
+
+The complementary \emph{Translation Barrier Hypothesis} \cite{bafna2025translationbarrier} locates many multilingual failures not in upstream reasoning (which proceeds adequately in the hub) but in \emph{late-layer language realisation}: the model reaches the correct conclusion internally and then fails while projecting into the target language's token space. This predicts two diagnostic categories: \emph{hub failures} (intermediate representations do not encode the correct intent) and \emph{realisation failures} (intermediate representations are correct but surface output is not). Language-aware interpretability tools such as Indic-TunedLens offer methodology for the distinction \cite{kumar2025indictunedlens}.
+
+Together these accounts predict the observed pattern: the bimodal Arabic IPD distribution and Vietnamese arithmetic errors reflect hub-level representational sparsity, while clembench format-adherence failures in German and Italian plausibly reflect late-layer realisation bottlenecks \cite{beyer2024clembench, schlangen2025clembench}. The same architecture produces both phenomena. A critical corollary is that \emph{confidence calibration} degrades in parallel: Expected Calibration Error rises roughly fivefold from English ($4.6\%$) to non-English ($23.1\%$) prompts \cite{ahuja2022calibration, zhou2025beyond}, producing over-confident, under-reliable agents precisely in the linguistic contexts where their substantive reasoning is weakest.
+
+\section{Theory of Mind Across Languages}
+\label{sec:cognition}
+
+Cooperation and deception both require \emph{theory of mind} (ToM): the capacity to model the mental states of other agents \cite{premack1978tom, deweerd2013bayesiantom}. In the cognitive-science canon, ToM is often the bottleneck behind cooperative achievement, and its cross-linguistic robustness matters for how LLM agents will perform in human multilingual groups.
+
+The XToM benchmark \cite{chan2025xtom} reveals an asymmetric degradation: while frontier models (GPT-4o, DeepSeek-R1) maintain multilingual fluency, their ToM scores drop measurably across languages, with English-to-Chinese recall BERTScore falling to 0.864 from an English-only 0.912 (a $5.3\%$ relative degradation). LLM-Hanabi \cite{chen2025llmhanabi} further establishes that \emph{first-order} ToM (interpreting another agent's intent) is the stronger predictor of cooperative success; when first-order ToM erodes in lower-resource languages, both cooperative \emph{and} deceptive reasoning suffer together. The result is counter-intuitive but coherent: a machine agent with weaker multilingual ToM is simultaneously a less effective collaborator and a less effective deceiver --- a combination that is safer on one axis but more brittle on another.
+
+The intent--action gap provides a second cognitive measurement point. The MAST taxonomy, built from over 1,600 execution traces across seven multi-agent frameworks \cite{cemri2025mast}, categorises 14 failure modes into Specification/Design Issues ($41.77\%$), Inter-Agent Misalignment ($36.94\%$), and Task Verification ($21.30\%$). The core failures --- reasoning-action mismatches and unwarranted conversation resets --- are cognitive in nature, and M3-BENCH's \emph{commitment-reliability} metric shows that promise-keeping drops significantly in mixed-motive multilingual games \cite{xie2026m3bench}.
+
+SPIN-Bench sharpens the picture by decoupling planning from social intelligence \cite{yao2025spinbench}: o3-mini scores over $51\%$ on formal PDDL planning yet fails at Diplomacy intention inference, while Claude 3.5 Sonnet inverts the pattern. Planning and ToM are distinct faculties that do not scale together. From a machine-behaviour standpoint, this mirrors the evolutionary-psychology distinction between ``Machiavellian intelligence'' and domain-general problem solving \cite{byrne1988machiavellian}, and suggests that cross-lingual transfer may be uneven across these faculties in ways that demand separate measurement.
+
+\section{Evolutionary Perspectives on Machine Cooperation}
+\label{sec:evolution}
+
+The ``nicer than human'' finding (Section~\ref{sec:relativity}) demands an evolutionary-game-theoretic explanation, and connecting LLM behaviour to this tradition is where the machine-behaviour research programme is least developed and most promising.
+
+\subsection{Axelrod's Legacy in a New Substrate}
+
+Axelrod's computer tournaments established that cooperation can emerge among self-interested agents when interactions are iterated, payoffs favour mutual gains, and simple reciprocity (Tit-for-Tat) is available \cite{axelrod1984evolution, nowak2006five}. Subsequent work enriched this with reputation mechanisms, punishment, spatial structure, and indirect reciprocity \cite{nowak1998evolution, panchanathan2004indirect}. In all of these, cooperation is an \emph{achievement}, selected over a history of interactions.
+
+LLM cooperation does not fit this mould. Models arrive at their first interaction \emph{pre-cooperative}: the pretraining and RLHF pipelines act as a form of \emph{cultural inheritance} that delivers a prosocial disposition before any game is played. This is most naturally read as a Boydian--Richersonian cultural-evolution process \cite{boyd1985culture, richerson2005notbygenes, henrich2016secret}: pretraining corpora are cumulative cultural products of millions of human authors, and RLHF injects an additional layer of selected human preferences. The resulting agents exhibit \emph{culturally inherited cooperation}, not evolved reciprocity.
+
+This reframes the linguistic-relativity finding. If cooperation is culturally inherited via text, then languages with different textual corpora should deliver different cooperative priors --- exactly the pattern observed in Table~\ref{tab:strategy}. The prediction is testable: languages whose pretraining corpora are more heavily weighted toward cooperative, prosocial discourse (educational and informational genres, perhaps) should yield more cooperative play, while corpora dominated by adversarial or commercial text should yield more competitive defaults. Existing corpus-audit methods \cite{gao2020pile, luccioni2021what} provide the machinery; the hypothesis has not yet been tested directly.
+
+\subsection{Cultural Evolution of Machine Behaviour}
+
+A further prediction follows. If LLM populations are linked --- via shared benchmarks, shared model families, and an increasingly common pipeline of distillation and self-training on model outputs --- then machine behaviour is itself subject to cultural evolution. Model-to-model transmission (distillation, synthetic-data training) is a form of \emph{high-fidelity oblique inheritance}; RLHF preferences are a form of \emph{selection}. The long-horizon question is whether machine behavioural traits drift in directions that human selection actively desires, or in directions driven by the structure of the transmission process itself --- a classical cultural-evolution question that the machine-behaviour programme is now equipped to ask empirically.
+
+Language interacts with this process. If the transmission bottleneck is largely English --- because English is the lingua franca of benchmarks, distillation targets, and RLHF annotator pools --- then non-English behavioural traits may drift independently, neither as evolved nor as selected, simply as under-observed side effects. The Semantic Hub Hypothesis supplies the architectural substrate for this prediction \cite{wu2024semantichub}. Empirically, the widening English-to-Arabic gap in TCG-Bench at 32B parameters \cite{wang2025tcgbench} is consistent with a drift that scale does not correct.
+
+\subsection{Trust, Reciprocity, and Commitment}
+
+The four CFP concepts meet in this section. \emph{Trust} and \emph{reciprocity} are operationalised in commitment reliability \cite{xie2026m3bench}: when agents announce cooperation and then defect, trust among machine and human counterparts erodes. \emph{Cooperation} is the behavioural output measured in Table~\ref{tab:strategy} and the ``nicer than human'' finding \cite{fontana2024nicer}. \emph{Cultural evolution} is the transmission mechanism producing these behaviours without in-game selection. Framing LLM social behaviour in these terms makes it commensurable with a century of work in biology, anthropology, and economics, rather than a brand-new object requiring a brand-new vocabulary.
+
+\section{Societal Implications and Open Questions}
+\label{sec:society}
+
+Multilingual LLM agents are not a laboratory curiosity. They are being deployed, now, in institutional contexts where language is the primary mediator of human outcomes: education platforms in Swahili and Hindi, public-sector chatbots in Arabic and Vietnamese, customer-service agents across dozens of markets, and increasingly, autonomous multi-agent systems negotiating commercial transactions \cite{martinez2024algorithmictrading, yong2025multilingualsafety}. If language modulates machine behaviour as Sections~\ref{sec:relativity}--\ref{sec:evolution} suggest, three societal consequences warrant attention.
+
+\emph{Unequal quality of machine-mediated institutions.} If confidence calibration degrades fivefold outside English \cite{zhou2025beyond}, public-facing LLM agents in the Global South will systematically offer more over-confident, less reliable advice to populations with fewer alternatives. This is not a bug of individual models but a property of the pipeline.
+
+\emph{Linguistically uneven attack surfaces.} Code-Switching Red-Teaming achieves a $46.7\%$ increase in attack success by mixing languages at the token level \cite{yoo2025csrt}; Agent-in-the-Middle attacks exploit inter-agent channels in multilingual multi-agent systems \cite{he2025agentmiddle}. Adversaries gain disproportionate leverage in exactly the linguistic contexts where safety data is sparsest. This is a safety externality of multilingual deployment.
+
+\emph{Co-evolution with human multilingual communities.} LLM outputs re-enter human discourse, and thence future pretraining corpora. If the machines' language-modulated behavioural defaults shape the text humans produce --- in business email, in customer interactions, in education --- then the cultural-inheritance loop we described in Section~\ref{sec:evolution} becomes bidirectional. What this means for institutional norms, linguistic diversity, and trust in machine intermediaries is a research agenda, not a solved problem.
+
+\subsection{Open Questions}
+
+Four questions strike us as most consequential.
+
+\emph{(i) Causal isolation of language.} Can the Algorithmic Sapir--Whorf Switch be demonstrated under controlled confound ablation --- matched tokenisers, audited RLHF coverage, pre-registered hypotheses? Current evidence is convergent but not causally clean.
+
+\emph{(ii) Mechanistic diagnostics at scale.} Can the hub--barrier distinction be turned into a standard benchmarking protocol (intermediate-layer probes at $\lfloor L/3 \rfloor$ and $\lfloor 2L/3 \rfloor$, with pre-registered acceptance criteria) \cite{kumar2025indictunedlens}? If so, practitioners can triage failures into training-data versus generation-stage remedies.
+
+\emph{(iii) Evaluation reliability.} Multilingual LLM-as-Judge reliability sits at Fleiss' $\kappa \approx 0.3$ (``fair to poor'') \cite{fu2025multilingualjudge}; panels of $\geq 3$ heterogeneous judges with self-translation and checklist rubrics can recover above $\kappa \approx 0.5$. Closing this gap is prerequisite for any quantitative machine-behaviour science.
+
+\emph{(iv) Cultural-evolution dynamics.} How do behavioural traits propagate through inter-model distillation and through model--human corpus loops, and does the dynamic preserve or erode linguistic diversity in the behavioural phenotype? This is perhaps the most natural place for the machine-behaviour programme to collaborate with cultural evolutionary biology.
 
 \section{Conclusions}
 
-    \lipsum[1]
+We have argued that language is an active modulator of behaviour in LLM agents, and that understanding this modulation requires integrating three traditions: \emph{behavioural characterisation} in the style of Rahwan's machine-behaviour programme \cite{rahwan2019machinebehaviour}; \emph{mechanistic interpretability}, which supplies the Semantic Hub and Translation Barrier accounts \cite{wu2024semantichub, bafna2025translationbarrier}; and \emph{evolutionary and cultural-evolution theory}, which provides the vocabulary of trust, reciprocity, inherited cooperation, and transmission dynamics \cite{axelrod1984evolution, henrich2016secret}. The emergent phenomena --- ``nicer than human'' cooperation that erodes language-dependently, asymmetric theory-of-mind degradation, compounding safety vulnerabilities via code-switching --- are not isolated benchmark artefacts but coordinated signatures of a multilingual machine ethology that is only beginning to be measured.
 
-\appendix
-
-\section{Appendix 1}
-
-    \lipsum[1-3]
+We have been careful to foreground contradictory evidence: a persuasion null finding, framing effects that dominate language effects, and unresolved confounds. The Algorithmic Sapir--Whorf Switch remains a working hypothesis, not a proven law. Yet the evidence is sufficient to motivate a research programme --- one that the Royal Society's long-running engagement with behaviour, cooperation, and evolution seems uniquely positioned to host.
 
 \end{multicols}
 
 \enlargethispage{20pt}
 
-\ethics{Insert ethics text here.}
+\ethics{This perspective synthesises existing literature and involves no new human-subjects research. Cross-linguistic behavioural divergences reported here reflect model--language interactions under specific training distributions, not properties of languages or of human cultures; readers are urged to communicate findings with this framing to avoid cultural essentialism.}
 
-\dataccess{Insert data access text here.}
+\dataccess{No new data were generated. All figures and numerical claims reference the cited primary sources.}
 
-\aucontribute{Insert author contribute text here.}
+\aucontribute{D.S.D.M.: conceptualisation, literature synthesis, writing --- original draft. V.N.: supervision, writing --- review and editing. [Co-author TBC].}
 
-\competing{Insert competing text here.}
+\competing{The authors declare no competing interests.}
 
-\funding{Insert funding text here.}
+\funding{To be added.}
 
-\ack{Insert acknowledgment text here.}
+\ack{The authors thank colleagues at the Faculty of Information Technology, University of Science, VNU-HCM for helpful discussion.}
 
-\disclaimer{Insert disclaimer text here.}
-
-%%%%%%%%%% Insert bibliography here %%%%%%%%%%%%%%
+\disclaimer{Views expressed are those of the authors and not of any affiliated institution.}
 
 \printbibliography
 
