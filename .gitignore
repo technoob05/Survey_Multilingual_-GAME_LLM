@@ -27,3 +27,6 @@ Thumbs.db
 
 # Archives (prefer unpacked sources)
 Royal_Society_Interface___LaTeX_Template.zip
+
+# Claude Code local state
+.claude/
