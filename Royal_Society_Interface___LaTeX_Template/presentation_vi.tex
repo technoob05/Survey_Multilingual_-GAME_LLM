@@ -1,0 +1,516 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+
+% Theme
+\usetheme{Madrid}
+\usecolortheme{default}
+
+% Vietnamese support — use lualatex or xelatex for best results
+% (works with pdflatex too via utf8 + T5, but T5 fontenc may need vntex)
+\usepackage[utf8]{inputenc}
+\usepackage[T5,T1]{fontenc}
+\usepackage[main=vietnamese,english]{babel}
+
+% Packages
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{shadows,arrows.meta,positioning,calc}
+\usepackage{amsmath}
+\usepackage{xcolor}
+
+% Royal Society palette
+\definecolor{rsnavy}{HTML}{1B2A4A}
+\definecolor{rsclaret}{HTML}{8E1A2B}
+\definecolor{rsteal}{HTML}{16A085}
+\definecolor{rsamber}{HTML}{F39C12}
+
+% Larger default font for readability
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{block title}{size=\normalsize,series=\bfseries}
+\setbeamercolor{frametitle}{fg=rsnavy}
+\setbeamercolor{title}{fg=rsnavy}
+\setbeamercolor{section in toc}{fg=rsnavy}
+
+% Custom take-away macro
+\newcommand{\takeaway}[1]{%
+  \begin{center}
+    \colorbox{rsnavy!10}{%
+      \begin{minipage}{0.92\textwidth}
+        \centering\textbf{#1}
+      \end{minipage}}
+  \end{center}}
+
+\title[Babel's Machines]{Babel's Machines}
+\subtitle{Ngôn ngữ định hình lại hành vi\\của các tác tử nhân tạo đa ngôn ngữ}
+\author[Đào S. D. Minh]{Đào Sỹ Duy Minh \and Vũ Nguyễn}
+\institute[VNU-HCM]{Khoa Công nghệ Thông tin\\Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM\\[4pt]
+\textit{Cho Interface Focus theme issue về machine behaviour}}
+\date{\today}
+
+\begin{document}
+
+% =====================================================
+% Slide 1 — Tiêu đề
+% =====================================================
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% =====================================================
+% Slide 2 — Roadmap
+% =====================================================
+\begin{frame}{Lộ trình}
+    \large
+    \begin{enumerate}
+        \setlength\itemsep{0.5em}
+        \item \textbf{Tại sao ngôn ngữ quan trọng} cho chương trình machine-behaviour
+        \item \textbf{LLM agents làm gì} qua các ngôn ngữ — bao gồm cả mâu thuẫn
+        \item \textbf{Tại sao} — cơ chế, alternatives, và vòng lặp causal cần đóng
+        \item \textbf{Vậy thì sao} — tiến hóa, governance, và bốn dự đoán có thể bác bỏ
+    \end{enumerate}
+\end{frame}
+
+% =====================================================
+% PHẦN 1 — TẠI SAO NGÔN NGỮ QUAN TRỌNG
+% =====================================================
+\section{Tại sao ngôn ngữ quan trọng}
+
+\begin{frame}{LLM không còn chỉ tạo văn bản. Chúng \emph{hành động}.}
+    \large
+    \begin{itemize}
+        \setlength\itemsep{0.4em}
+        \item Đàm phán giao dịch và tạo liên minh (Diplomacy, bargaining)
+        \item Hợp tác và phản bội trong các trò chơi lặp lại (Prisoner's Dilemma)
+        \item Lừa dối trong các trò chơi suy luận xã hội (Werewolf, Avalon)
+        \item Quản lý ngân sách trong sàn đấu giá; cộng tác trên các tác vụ kéo dài hàng giờ
+    \end{itemize}
+    \vspace{0.4cm}
+    \takeaway{Đây là \emph{ethology}, không phải benchmark. Công cụ đúng đến từ sinh học, lý thuyết trò chơi tiến hóa, và tiến hóa văn hóa --- không phải kỹ thuật.}
+    \vspace{0.2cm}
+    \begin{flushright}
+        \small\itshape Rahwan et al., \emph{Nature} 2019 --- chương trình machine-behaviour
+    \end{flushright}
+\end{frame}
+
+\begin{frame}{Luận điểm trong một câu}
+    \vspace{0.2cm}
+    \large
+    \begin{quote}
+        \itshape ``Ngôn ngữ mà LLM agent hoạt động trong đó định hình lại một cách hệ thống hành vi chiến lược, theory-of-mind, và prosocial defaults của nó.''
+    \end{quote}
+    \vspace{0.3cm}
+    \normalsize
+    Chúng tôi gọi đây là \textbf{Algorithmic Sapir--Whorf Switch} (theo Wang et al., 2025).
+    \vspace{0.4cm}
+    \begin{block}{Cái chúng tôi \emph{không} claim}
+        Không phải claim Whorfian mạnh — rằng ngôn ngữ quyết định tư duy.\\
+        Chỉ là: các biểu diễn đặc thù theo ngôn ngữ bên trong mô hình điều biến chính sách mà mô hình thực thi trong môi trường tương tác.\\
+        \emph{Thực nghiệm, không siêu hình.} Chúng tôi dành không gian thực sự cho bằng chứng phản bác.
+    \end{block}
+\end{frame}
+
+% =====================================================
+% PHẦN 2 — LLM AGENTS LÀM GÌ
+% =====================================================
+\section{LLM agents làm gì qua các ngôn ngữ}
+
+\begin{frame}{Bảy họ trò chơi tương tác --- tất cả đều cho thấy hiệu ứng ngôn ngữ}
+    \large
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \setlength\itemsep{0.3em}
+                \item Tình thế xã hội (IPD, Public Goods)
+                \item Đàm phán (Diplomacy, bargaining)
+                \item Thuyết phục / đấu giá
+                \item Suy luận xã hội (Werewolf, Avalon, Spyfall)
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \setlength\itemsep{0.3em}
+                \item Giao tiếp hợp tác (Codenames, Hanabi)
+                \item Trò chơi mở thế giới (Minecraft, BALROG)
+                \item Dialogue games (clembench)
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \vspace{0.5cm}
+    \takeaway{Mọi họ đã được chạy đa ngôn ngữ. Mọi họ đều báo cáo divergence theo ngôn ngữ.}
+\end{frame}
+
+\begin{frame}{Cùng mô hình, cùng game, ngôn ngữ khác $\rightarrow$ chiến lược khác}
+    \begin{columns}[T]
+        \begin{column}{0.42\textwidth}
+            \begin{table}
+            \centering\small
+            \begin{tabular}{@{}lcccc@{}}
+                \toprule
+                & ALLC & ALLD & TFT & WSLS \\
+                \midrule
+                Anh        & 26 & 25 & 25 & 24 \\
+                Pháp       & 27 & 18 & 26 & 29 \\
+                Ả Rập      & \textbf{32} & \textbf{28} & 19 & 21 \\
+                Trung      & 31 & 30 & 19 & \textbf{20} \\
+                Việt       & 26 & 24 & 23 & 27 \\
+                \bottomrule
+            \end{tabular}
+            \end{table}
+            \scriptsize Tổng hợp qua 4 họ mô hình,\\$\geq 200$ vòng/điều kiện.\\Tỷ lệ mô tả, không phải meta-analysis.
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            \textbf{Ba pattern cần chú ý:}
+            \vspace{0.2cm}
+            \begin{itemize}
+                \setlength\itemsep{0.4em}
+                \item \textcolor{rsclaret}{\textbf{Tiếng Ả Rập bimodal}} --- cả hợp tác cao nhất \emph{và} phản bội cao thứ hai. Volatile, không adversarial.
+                \item \textbf{Tiếng Việt subverts collectivist prior} --- defection cao trong một số setup; một mô hình collapse xuống 2\% cooperation.
+                \item \textbf{Tiếng Trung ưa Win-Stay-Lose-Shift} hơn Tit-for-Tat --- outcome-driven, không phải reciprocity-driven.
+            \end{itemize}
+            \vspace{0.2cm}
+            \scriptsize\itshape Hiệu ứng họ mô hình cũng lấn át hiệu ứng ngôn ngữ: GPT-4o ``hawkish'', Mistral ``dovish'' --- bất kể ngôn ngữ.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LLM ``nicer than humans'' --- trong một regime rất cụ thể}
+    \large
+    LLM tiền tuyến hợp tác ở tỷ lệ cao hơn nhiều so với người chơi điển hình trong IPD lặp lại.
+    \vspace{0.3cm}
+    \begin{block}{Regime mà điều này đúng}
+        Ma trận payoff hợp tác $(R{=}3, S{=}0, T{=}5, P{=}1)$, \\
+        \textbf{horizon được công bố} (e.g.\ 100 vòng), \\
+        đối thủ \textbf{khai thác được} (random, defection prob.\ 0.5--0.7).
+    \end{block}
+    \vspace{0.3cm}
+    \begin{block}{Regime mà điều này đảo ngược}
+        Horizon không xác định? Hợp tác toàn cầu hóa qua tất cả ngôn ngữ.\\
+        Game cạnh tranh thuần (rock-paper-scissors)? LLM chơi \emph{sâu hơn} con người.
+    \end{block}
+    \vspace{0.3cm}
+    \takeaway{Prosocial default là thật nhưng có điều kiện --- thuộc tính của game hợp tác \& mixed-motive, không phải trait đồng nhất của LLM.}
+\end{frame}
+
+\begin{frame}{Foreground mâu thuẫn --- bound claim một cách thành thật}
+    \large
+    \textbf{Bốn phát hiện đẩy ngược lại cách đọc mạnh về hiệu ứng ngôn ngữ:}
+    \vspace{0.3cm}
+    \normalsize
+    \begin{enumerate}
+        \setlength\itemsep{0.4em}
+        \item \textbf{Persuasion null} (Biswas et al., CHI 2025): cross-lingual persuasive co-writing --- usage shifts, nhưng \emph{không có aggregate effect on persuasiveness}. Cái quan trọng là beliefs về AI authorship.
+        \item \textbf{Cheap talk lấn át} (Madmoun \& Lahlou, 2025): một từ giao tiếp thêm nâng Stag Hunt cooperation từ \textbf{0\% lên 96.7\%} --- trong mọi ngôn ngữ.
+        \item \textbf{Framing lấn át} (Buscemi et al., 2025): khi horizon không xác định, tỷ lệ hợp tác toàn cầu hóa qua các ngôn ngữ.
+        \item \textbf{Vietnamese ``defection'' = lỗi số học} (Huynh et al., 2025): ``defection'' low-stakes đôi khi là payoff miscomprehension, không phải chiến lược.
+    \end{enumerate}
+    \vspace{0.3cm}
+    \takeaway{Ngôn ngữ matters, nhưng không như núm xoay văn hóa cố định. Nó tương tác với framing, stake, giao tiếp, và task.}
+\end{frame}
+
+% =====================================================
+% PHẦN 3 — TẠI SAO (CƠ CHẾ)
+% =====================================================
+\section{Tại sao --- cơ chế kiến trúc}
+
+\begin{frame}{Hai cơ chế giải thích cross-lingual gap}
+    \large
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \textbf{Semantic Hub} \scriptsize (Wu et al., 2024)\\[4pt]
+            \normalsize Multilingual inputs project vào một hub trung gian English-dominant.\\[6pt]
+            \footnotesize\itshape Bằng chứng causal: vector điều khiển kích hoạt derived từ tiếng Anh shift output Tây Ban Nha/Trung không kém gì native steering. Hub causally engaged, không vestigial.
+            \vspace{0.4cm}\\
+            \textbf{Translation Barrier} \scriptsize (Bafna et al., 2025)\\[4pt]
+            \normalsize Nhiều failures là lỗi \emph{realisation lớp cuối} --- mô hình reasoning đúng bên trong, fail khi project ra ngôn ngữ đích.
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{block}{Khủng hoảng calibration}
+                \centering
+                \large \textbf{Expected Calibration Error}\\[6pt]
+                \begin{tabular}{lc}
+                    \toprule
+                    \textbf{Ngôn ngữ} & \textbf{ECE} \\
+                    \midrule
+                    Anh        & 4.6\% \\
+                    Phi-Anh    & \textcolor{rsclaret}{\textbf{23.1\%}} \\
+                    \bottomrule
+                \end{tabular}\\[6pt]
+                \scriptsize Ahuja et al.\ 2022 (MEGA / XGLM, BLOOM, PaLM, 15-bin equal-width)
+            \end{block}
+            \vspace{0.2cm}
+            \takeaway{Mô hình \emph{tự tin sai} trong ngữ cảnh phi-Anh.}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Chúng tôi không claim độc quyền --- ba alternatives}
+    \large
+    \begin{enumerate}
+        \setlength\itemsep{0.5em}
+        \item \textbf{Vi mạch đặc thù theo ngôn ngữ} \scriptsize (Pires, Schlinger, Garrette 2019 trên mBERT)\\
+        \normalsize Một số failures bền vững theo cặp ngôn ngữ. Gợi ý các subnetwork tách biệt một phần.
+        \item \textbf{Subspace interference} \scriptsize (lineage XLM-R, mT5)\\
+        \normalsize Scale làm dịu nhưng không loại bỏ nhiễu cross-lingual. Low-resource langs trôi.
+        \item \textbf{Latent-language priors} \scriptsize (Wendler et al., 2024)\\
+        \normalsize Llama decoders đi qua intermediate \emph{gần với tiếng Anh hơn} ngôn ngữ đầu vào.
+    \end{enumerate}
+    \vspace{0.3cm}
+    \begin{block}{Phép thử tự nhiên --- chạy được \emph{ngay}}
+        \textbf{Mô hình ưu tiên ngôn ngữ}: CT-LLM (800B Trung) và TigerLLM (Bangla).\\[4pt]
+        Nếu Semantic Hub là về \emph{dữ liệu huấn luyện} không phải kiến trúc, các mô hình này nên \emph{đảo ngược} sự bất đối xứng.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Đóng vòng lặp --- từ representation tới behavior}
+    \large
+    Liên kết từ ``hub asymmetry'' tới ``phân phối chiến lược IPD Tiếng Việt'' hiện tại là \textbf{inferential, không causal}.
+    \vspace{0.3cm}
+    \begin{block}{Tại sao điều này có thể fix bây giờ}
+        Interpretability gần đây có đủ precedent cần thiết:
+        \begin{itemize}
+            \setlength\itemsep{0.2em}
+            \item Spatial reps causally affect prediction \scriptsize (Chen et al., 2023)
+            \item World-model state vars linearly decodable \emph{và} causally engaged \scriptsize (Zhang, 2026)
+            \item Layer-resolved tools (LogitLens4LLMs, arithmetic-trajectory probes, syntax/semantics probes)
+        \end{itemize}
+    \end{block}
+    \vspace{0.3cm}
+    \takeaway{Thí nghiệm kế tiếp: derive steering vector từ \emph{Tiếng Anh} cooperative vs.\ defective IPD play. Apply vào cùng mô hình ở Tiếng Ả Rập. Đo strategy shift kết quả.\\Chuyển representation claim thành behavioural lever.}
+\end{frame}
+
+% =====================================================
+% PHẦN 4 — TOM VÀ MODERATORS
+% =====================================================
+\section{Theory of Mind qua các ngôn ngữ}
+
+\begin{frame}{Trẻ song ngữ giỏi ToM \emph{hơn}. LLM thì kém hơn.}
+    \large
+    \textbf{Baseline ở người:} trẻ song ngữ vượt qua bài false-belief \emph{sớm hơn} đơn ngữ.
+    \scriptsize \itshape (Kovács 2009; Goetz 2003 --- đòi hỏi executive của code-switching scaffold ToM.)
+    \vspace{0.3cm}
+    \normalsize\textbf{Dự đoán ngầm cho máy:} mô hình đa ngôn ngữ nên là tác tử ToM \emph{mạnh hơn}, không yếu hơn.
+    \vspace{0.4cm}
+    \begin{block}{Cái ta thực sự thấy}
+        \begin{itemize}
+            \setlength\itemsep{0.3em}
+            \item \textbf{XToM} (Chan et al., 2025): GPT-4o có khoảng cách ToM 11 điểm giữa Tiếng Nhật và Tiếng Trung trên cùng items.
+            \item \textbf{LLM-Hanabi}: khi first-order ToM erodes, cả \emph{hợp tác} và \emph{lừa dối} cùng erode.
+        \end{itemize}
+    \end{block}
+    \vspace{0.2cm}
+    \footnotesize\itshape Caveat (Ullman 2023; Sap et al.\ 2022): điểm ToM tuyệt đối của LLM đang tranh cãi. Nhưng \emph{differences} cross-lingual trên parallel items vẫn well-defined bất kể construct-validity disputes.
+\end{frame}
+
+\begin{frame}{Ngôn ngữ là một moderator. Có ít nhất ba moderators khác.}
+    \large
+    \begin{columns}[T]
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Personality steering}
+                \footnotesize Ong et al.\ (2025).\\
+                Steering Big-Five Agreeableness điều biến IPD cooperation \emph{và} tăng exploitation susceptibility.\\[4pt]
+                \textit{$\Rightarrow$ Internal reps causally steer cooperation.}
+            \end{block}
+        \end{column}
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Communication delay}
+                \footnotesize Nishimoto et al.\ (2026).\\
+                Quan hệ U-shape giữa delay và hợp tác. Agents \emph{tự phát} khai thác đối tác chậm hơn.\\[4pt]
+                \textit{$\Rightarrow$ Hạ tầng đổi behavior, không cần đổi ngôn ngữ.}
+            \end{block}
+        \end{column}
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Partner identity}
+                \footnotesize Jiang et al.\ (2025).\\
+                Hợp tác của con người chống agent phụ thuộc declared identity (người/rule-AI/LLM).\\[4pt]
+                \textit{$\Rightarrow$ Ngôn ngữ là một signal định khung identity.}
+            \end{block}
+        \end{column}
+    \end{columns}
+    \vspace{0.4cm}
+    \takeaway{Bất cứ phép thử linguistic relativity sạch nào phải hold ba cái này constant. Nếu không, ta nhầm moderator effects với hiệu ứng ngôn ngữ.}
+\end{frame}
+
+% =====================================================
+% PHẦN 5 — KHUNG TIẾN HÓA
+% =====================================================
+\section{Hợp tác --- tiến hóa hay kế thừa?}
+
+\begin{frame}{Hợp tác LLM không vừa khuôn Axelrod}
+    \large
+    \textbf{Truyền thống Axelrod:} hợp tác là một \emph{thành tựu}.\\
+    Hợp tác ổn định đòi hỏi tương tác lặp lại, danh tiếng, hình phạt, network reciprocity.
+    \vspace{0.3cm}
+    \begin{block}{LLM đến trong trạng thái \emph{pre-cooperative}}
+        Trước khi bất cứ game nào diễn ra:
+        \begin{itemize}
+            \setlength\itemsep{0.2em}
+            \item \textbf{Pretraining corpora} = sản phẩm văn hóa tích lũy của hàng triệu authors người
+            \item \textbf{RLHF} = một lớp ưu tiên người được chọn lọc
+        \end{itemize}
+        \vspace{0.2cm}
+        Cùng nhau hoạt động như \textbf{kế thừa văn hóa} (Boyd \& Richerson 1985; Henrich 2015).
+    \end{block}
+    \vspace{0.3cm}
+    \takeaway{Hợp tác LLM là \emph{kế thừa văn hóa}, không phải tiến hóa qua tương tác. Hệ quả là có thể kiểm tra.}
+\end{frame}
+
+\begin{frame}{Vấn đề WEIRD và transmission bottleneck đa ngôn ngữ}
+    \large
+    \begin{columns}[T]
+        \begin{column}{0.50\textwidth}
+            \textbf{Corpora WEIRD-skewed}\\
+            \footnotesize Henrich, Heine, Norenzayan (2010); Muthukrishna et al.\ (2020):\\[4pt]
+            \normalsize Quần thể WEIRD là \textbf{outlier thống kê} về individualism, tư duy phân tích, fair-procedure framings.
+            \vspace{0.3cm}
+            Nếu LLM kế thừa hợp tác từ corpora này, chúng encode chuẩn WEIRD trong khi \emph{xuất hiện như universal}.
+            \vspace{0.3cm}
+            \takeaway{Triển khai đa ngôn ngữ rủi ro \emph{áp đặt normative} --- không chỉ khoảng cách performance.}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \begin{alertblock}{Máy giờ đối mặt tiến hóa văn hóa}
+                \footnotesize Quần thể LLM được liên kết qua:
+                \begin{itemize}
+                    \item Benchmark chia sẻ
+                    \item Họ mô hình chia sẻ
+                    \item Distillation \& self-training trên outputs của nhau
+                \end{itemize}
+                \vspace{0.2cm}
+                Nếu cổ chai là Tiếng Anh (lingua franca của benchmark + RLHF annotators), \textbf{trait phi-Anh trôi độc lập}.
+                \vspace{0.2cm}
+                Tín hiệu thực nghiệm: khoảng cách English-Arabic trong TCG-Bench tại 32B params \emph{không} sửa được bằng scale.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =====================================================
+% PHẦN 6 — XÃ HỘI VÀ GOVERNANCE
+% =====================================================
+\section{Xã hội và governance}
+
+\begin{frame}{Ba hệ quả xã hội --- đã đang triển khai}
+    \large
+    \begin{columns}[T]
+        \begin{column}{0.32\textwidth}
+            \begin{alertblock}{Chất lượng thể chế bất bình đẳng}
+                \footnotesize Calibration \emph{kém hơn $\sim 5\times$} ngoài Tiếng Anh.\\[4pt]
+                Public-facing agents ở Global South sẽ đưa ra lời khuyên \emph{tự tin sai} cho những người có ít lựa chọn nhất.\\[4pt]
+                Đã triển khai: UlizaLlama (sức khỏe, Swahili), Aya Expanse (23 langs incl.\ VI), Bhashini (India).
+            \end{alertblock}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \begin{alertblock}{Bề mặt tấn công bất đối xứng}
+                \footnotesize Code-Switching Red-Teaming (Yoo et al., 2025): \textbf{+46.7\%} tỷ lệ tấn công thành công bằng cách trộn ngôn ngữ ở mức token.\\[4pt]
+                Tấn công Agent-in-the-Middle khai thác kênh inter-agent.\\[4pt]
+                Đối thủ giành đòn bẩy ở chính nơi safety data thưa nhất.
+            \end{alertblock}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \begin{alertblock}{Đồng tiến hóa}
+                \footnotesize Outputs LLM tái nhập diễn ngôn người, rồi vào training corpora tương lai.\\[4pt]
+                Defaults máy điều biến theo ngôn ngữ định hình text mà người viết tiếp.\\[4pt]
+                Vòng lặp kế thừa văn hóa thành \textbf{hai chiều}.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Ba đòn bẩy governance --- không cần đột phá}
+    \large
+    \begin{enumerate}
+        \setlength\itemsep{0.5em}
+        \item \textbf{Đa dạng hóa benchmark.}\\
+        \normalsize Ghép benchmark an toàn (M-ALERT) với benchmark interactive multi-agent (clembench, MultiAgentBench, TCG-Bench). Báo cáo khoảng cách hành vi \emph{và} an toàn \emph{cùng nhau}.
+
+        \item \textbf{Chuẩn coverage RLHF đa ngôn ngữ.}\\
+        \normalsize Mọi model card báo cáo annotator composition theo ngôn ngữ và phương ngữ. Đề xuất floor: $\geq 5\%$ preference labels per language cho bất cứ model triển khai qua $> 5$ ngôn ngữ, với dialectal stratification được tài liệu hóa.
+
+        \item \textbf{Chuẩn audit cho triển khai multi-agent.}\\
+        \normalsize Probe code-switching và mô hình mối đe dọa Agent-in-the-Middle thành test bed \emph{mặc định} --- như probe prompt-injection đã là cho single-agent.
+    \end{enumerate}
+    \vspace{0.3cm}
+    \takeaway{Cái thiếu là \emph{hạ tầng thể chế}, không phải methodology.}
+\end{frame}
+
+% =====================================================
+% PHẦN 7 — RESEARCH AGENDA
+% =====================================================
+\section{Bốn dự đoán có thể bác bỏ}
+
+\begin{frame}{Bốn dự đoán, mỗi cái falsifiable với phương pháp hiện tại}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{P1 --- Corpus $\leftrightarrow$ hợp tác}
+                \footnotesize Mật độ cooperative-discourse trong corpora tiền huấn luyện $\rho$ tỷ lệ hợp tác IPD qua các ngôn ngữ.\\
+                Workarounds cho closed corpora: open-data models (Pile, CT-LLM, TigerLLM), proxy corpora, controlled small-model runs.\\[4pt]
+                \textbf{Falsifier:} Spearman $\rho$ không phân biệt được khỏi 0 qua $\geq 8$ ngôn ngữ.
+            \end{block}
+            \vspace{0.2cm}
+            \begin{block}{P2 --- Hub probe + behavioural readout}
+                \footnotesize Probe layers $\lfloor L/3 \rfloor, \lfloor 2L/3 \rfloor$ phân loại hub vs.\ realisation failures.\\
+                \textbf{Sau đó:} áp dụng English-derived steering vector vào IPD prompt phi-Anh; đo strategy shift.\\[4pt]
+                \textbf{Falsifier:} không có behavioural shift sau steering.
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{P3 --- Drift dưới distillation}
+                \footnotesize Chuỗi distillation kiểm soát: traits truyền dẫn high-fidelity trong Tiếng Anh, suy giảm trong low-resource langs.\\[4pt]
+                \textbf{Falsifier:} không có degradation $\Rightarrow$ inheritance-via-distillation sai.
+            \end{block}
+            \vspace{0.2cm}
+            \begin{block}{P4 --- Ceiling độ tin cậy đánh giá}
+                \footnotesize Multilingual LLM-as-Judge với $\geq 3$ judges dị thể + self-translation + checklist rubrics nâng Fleiss' $\kappa > 0.5$.\\[4pt]
+                \textbf{Falsifier:} saturates dưới $0.5$ $\Rightarrow$ cần bilingual human adjudication, không phải aggregation tốt hơn.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =====================================================
+% PHẦN 8 — KẾT LUẬN
+% =====================================================
+\section{Take-aways}
+
+\begin{frame}{Năm điều cần nhớ}
+    \large
+    \begin{enumerate}
+        \setlength\itemsep{0.5em}
+        \item \textbf{Ngôn ngữ điều biến machine behavior.} Là biến chủ động, không phải phương tiện thụ động.
+        \item \textbf{Cơ chế là kiến trúc.} Hub, Barrier, microcircuits, latent-language --- không phải cultural essentialism.
+        \item \textbf{Hợp tác là kế thừa, không phải tiến hóa.} Pretraining + RLHF là cơ chế kế thừa.
+        \item \textbf{Mâu thuẫn là informative.} Persuasion null, cheap-talk dominance, lỗi số học Tiếng Việt --- chúng bound claim.
+        \item \textbf{Tổng hợp $\rightarrow$ research agenda.} Bốn dự đoán falsifiable; đóng vòng lặp representation--behavior là cấp bách nhất.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Vị trí trong chương trình machine-behaviour}
+    \large
+    \textbf{Liên tục với:}\\
+    \footnotesize Rahwan (machine behaviour) $\cdot$ Han (evolutionary game theory cho multi-agent emergence) $\cdot$ Perc (statistical physics of cooperation) $\cdot$ Boyd, Richerson, Henrich (cultural evolution) $\cdot$ Axelrod, Nowak (cooperation without design)
+    \vspace{0.5cm}\\
+    \normalsize\textbf{Đóng góp riêng biệt:}
+    \begin{itemize}
+        \setlength\itemsep{0.3em}
+        \item Treats \emph{ngôn ngữ} như biến điều biến trong machine ethology
+        \item Tái định khung ``nicer than human'' như kế thừa văn hóa, với hệ quả WEIRD
+        \item Bridges mechanistic interpretability với population-level cooperation theory
+        \item Cung cấp agenda falsifiable ngay
+    \end{itemize}
+    \vspace{0.5cm}
+    \takeaway{Quần thể máy giờ cung cấp một substrate thực nghiệm mới --- consequential một cách khó chịu --- cho khoa học về hợp tác.}
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+        \Huge \textcolor{rsnavy}{\textbf{Cảm ơn}} \\[0.6cm]
+        \large Câu hỏi \& thảo luận \\[0.8cm]
+        \normalsize
+        \textbf{Đào Sỹ Duy Minh}\\
+        Khoa Công nghệ Thông tin, Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM\\
+        \texttt{dsdminh22@apcs.fitus.edu.vn}\\[0.8cm]
+        \scriptsize\itshape Babel's Machines --- Linguistic Relativity, Cooperation,\\and the Emerging Behaviour of Multilingual Artificial Agents.\\
+        Cho Interface Focus theme issue về machine behaviour in the age of LLMs.
+    \end{center}
+\end{frame}
+
+\end{document}

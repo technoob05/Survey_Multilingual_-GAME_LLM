@@ -1,0 +1,513 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+
+% Theme
+\usetheme{Madrid}
+\usecolortheme{default}
+\usefonttheme{professionalfonts}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{shadows,arrows.meta,positioning,calc}
+\usepackage{amsmath}
+\usepackage{xcolor}
+
+% Royal Society palette
+\definecolor{rsnavy}{HTML}{1B2A4A}
+\definecolor{rsclaret}{HTML}{8E1A2B}
+\definecolor{rsteal}{HTML}{16A085}
+\definecolor{rsamber}{HTML}{F39C12}
+
+% Larger default font for readability
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{block title}{size=\normalsize,series=\bfseries}
+\setbeamercolor{frametitle}{fg=rsnavy}
+\setbeamercolor{title}{fg=rsnavy}
+\setbeamercolor{section in toc}{fg=rsnavy}
+
+% Custom take-away macro: bolded, accent-coloured headline
+\newcommand{\takeaway}[1]{%
+  \begin{center}
+    \colorbox{rsnavy!10}{%
+      \begin{minipage}{0.92\textwidth}
+        \centering\textbf{#1}
+      \end{minipage}}
+  \end{center}}
+
+\title[Babel's Machines]{Babel's Machines}
+\subtitle{How language reshapes the behaviour\\of multilingual artificial agents}
+\author[Dao S. D. Minh]{Dao Sy Duy Minh \and Vu Nguyen}
+\institute[VNU-HCM]{Faculty of Information Technology\\University of Science, VNU-HCM\\[4pt]
+\textit{For Interface Focus theme issue on machine behaviour}}
+\date{\today}
+
+\begin{document}
+
+% =====================================================
+% Slide 1 — Title
+% =====================================================
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% =====================================================
+% Slide 2 — Outline
+% =====================================================
+\begin{frame}{Roadmap}
+    \large
+    \begin{enumerate}
+        \setlength\itemsep{0.5em}
+        \item \textbf{Why language matters} for the machine-behaviour programme
+        \item \textbf{What LLM agents do} across languages — including the contradictions
+        \item \textbf{Why} — mechanism, alternatives, and the causal loop we still need to close
+        \item \textbf{So what} — evolution, governance, and four falsifiable predictions
+    \end{enumerate}
+\end{frame}
+
+% =====================================================
+% PART 1 — WHY LANGUAGE MATTERS
+% =====================================================
+\section{Why language matters}
+
+\begin{frame}{LLMs no longer just produce text. They act.}
+    \large
+    \begin{itemize}
+        \setlength\itemsep{0.4em}
+        \item Negotiate trades and form coalitions (Diplomacy, bargaining)
+        \item Cooperate and defect in iterated games (Prisoner's Dilemma)
+        \item Deceive in social-deduction games (Werewolf, Avalon)
+        \item Manage budgets in auctions; collaborate on hours-long tasks
+    \end{itemize}
+    \vspace{0.4cm}
+    \takeaway{This is an \emph{ethology}, not a benchmark. The right tools come from biology, evolutionary game theory, and cultural evolution --- not engineering.}
+    \vspace{0.2cm}
+    \begin{flushright}
+        \small\itshape Rahwan et al., \emph{Nature} 2019 — \textit{the machine-behaviour programme}
+    \end{flushright}
+\end{frame}
+
+\begin{frame}{Our claim, in one sentence}
+    \vspace{0.2cm}
+    \large
+    \begin{quote}
+        \itshape ``The language an LLM agent operates in systematically reshapes its strategic behaviour, theory-of-mind performance, and prosocial defaults.''
+    \end{quote}
+    \vspace{0.3cm}
+    \normalsize
+    We call this the \textbf{Algorithmic Sapir--Whorf Switch} (after Wang et al., 2025).
+    \vspace{0.4cm}
+    \begin{block}{What we are \emph{not} claiming}
+        Not the strong Whorfian claim that language determines thought.\\
+        Just: language-specific representations inside the model modulate the policies the model executes in interactive environments.\\
+        \emph{Empirical, not metaphysical.} We devote real space to evidence against the claim.
+    \end{block}
+\end{frame}
+
+% =====================================================
+% PART 2 — WHAT LLM AGENTS DO
+% =====================================================
+\section{What LLM agents do across languages}
+
+\begin{frame}{Seven families of interactive games --- all show language effects}
+    \large
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \setlength\itemsep{0.3em}
+                \item Social dilemmas (IPD, Public Goods)
+                \item Negotiation (Diplomacy, bargaining)
+                \item Persuasion / auction
+                \item Social deduction (Werewolf, Avalon, Spyfall)
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \setlength\itemsep{0.3em}
+                \item Cooperative communication (Codenames, Hanabi)
+                \item Open-world games (Minecraft, BALROG)
+                \item Dialogue games (clembench)
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \vspace{0.5cm}
+    \takeaway{Every family has been run multilingual. Every family reports language-dependent divergence.}
+\end{frame}
+
+\begin{frame}{Same model, same game, different language $\rightarrow$ different strategy}
+    \begin{columns}[T]
+        \begin{column}{0.42\textwidth}
+            \begin{table}
+            \centering\small
+            \begin{tabular}{@{}lcccc@{}}
+                \toprule
+                & ALLC & ALLD & TFT & WSLS \\
+                \midrule
+                English    & 26 & 25 & 25 & 24 \\
+                French     & 27 & 18 & 26 & 29 \\
+                Arabic     & \textbf{32} & \textbf{28} & 19 & 21 \\
+                Chinese    & 31 & 30 & 19 & \textbf{20} \\
+                Vietnamese & 26 & 24 & 23 & 27 \\
+                \bottomrule
+            \end{tabular}
+            \end{table}
+            \scriptsize Aggregated across 4 model families,\\$\geq 200$ rounds/condition.\\Descriptive proportions, not meta-analysis.
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            \textbf{Three patterns to notice:}
+            \vspace{0.2cm}
+            \begin{itemize}
+                \setlength\itemsep{0.4em}
+                \item \textcolor{rsclaret}{\textbf{Arabic is bimodal}} — both highest cooperation \emph{and} second-highest defection. Volatile, not adversarial.
+                \item \textbf{Vietnamese subverts the collectivist prior} — high defection in some setups; one model collapses to 2\% cooperation.
+                \item \textbf{Chinese prefers Win-Stay-Lose-Shift} over Tit-for-Tat — outcome-driven, not reciprocity-driven.
+            \end{itemize}
+            \vspace{0.2cm}
+            \scriptsize\itshape Model-family effects also swamp language effects: GPT-4o ``hawkish'', Mistral ``dovish'' — regardless of language.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LLMs are ``nicer than humans'' --- in a very specific regime}
+    \large
+    Frontier LLMs cooperate at rates well above typical human players in iterated Prisoner's Dilemma.
+    \vspace{0.3cm}
+    \begin{block}{The regime where this holds}
+        Cooperative-payoff matrix $(R{=}3, S{=}0, T{=}5, P{=}1)$, \\
+        \textbf{horizon disclosed} (e.g.\ 100 rounds), \\
+        opponent is \textbf{exploitable} (random, defection prob.\ 0.5--0.7).
+    \end{block}
+    \vspace{0.3cm}
+    \begin{block}{The regime where it inverts}
+        Unknown horizon? Cooperation universalises across all languages.\\
+        Pure-competitive game (rock-paper-scissors)? LLMs play \emph{deeper} than humans.
+    \end{block}
+    \vspace{0.3cm}
+    \takeaway{The prosocial default is real but conditional --- a property of cooperative \& mixed-motive games, not a uniform LLM trait.}
+\end{frame}
+
+\begin{frame}{Foregrounding contradictions --- bounding the claim honestly}
+    \large
+    \textbf{Four findings push back against a strong reading of language effects:}
+    \vspace{0.3cm}
+    \normalsize
+    \begin{enumerate}
+        \setlength\itemsep{0.4em}
+        \item \textbf{Persuasion null} (Biswas et al., CHI 2025): cross-lingual persuasive co-writing — usage shifts, but \emph{no aggregate effect on persuasiveness}. What mattered was beliefs about AI authorship.
+        \item \textbf{Cheap talk dominates} (Madmoun \& Lahlou, 2025): one extra communication word raises Stag-Hunt cooperation from \textbf{0\% to 96.7\%} --- in every language tested.
+        \item \textbf{Framing dominates} (Buscemi et al., 2025): when game horizon is unknown, cooperation rates universalise across languages.
+        \item \textbf{Vietnamese ``defection'' = arithmetic error} (Huynh et al., 2025): low-stakes ``defection'' is sometimes payoff miscomprehension, not strategy.
+    \end{enumerate}
+    \vspace{0.3cm}
+    \takeaway{Language matters, but not as a fixed cultural dial. It interacts with framing, stakes, communication, and tasks.}
+\end{frame}
+
+% =====================================================
+% PART 3 — WHY (MECHANISM)
+% =====================================================
+\section{Why --- the architectural mechanism}
+
+\begin{frame}{Two mechanisms account for the cross-lingual gap}
+    \large
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \textbf{Semantic Hub} \scriptsize (Wu et al., 2024)\\[4pt]
+            \normalsize Multilingual inputs project into a centralised, English-dominant intermediate hub.\\[6pt]
+            \footnotesize\itshape Causal evidence: English-derived activation steering vectors shift Spanish/Chinese outputs as effectively as native steering. The hub is causally engaged, not vestigial.
+            \vspace{0.4cm}\\
+            \textbf{Translation Barrier} \scriptsize (Bafna et al., 2025)\\[4pt]
+            \normalsize Many failures are \emph{late-layer realisation} errors --- the model reasoned correctly internally, then failed projecting into the target language.
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{block}{The calibration crisis}
+                \centering
+                \large \textbf{Expected Calibration Error}\\[6pt]
+                \begin{tabular}{lc}
+                    \toprule
+                    \textbf{Language} & \textbf{ECE} \\
+                    \midrule
+                    English      & 4.6\% \\
+                    Non-English  & \textcolor{rsclaret}{\textbf{23.1\%}} \\
+                    \bottomrule
+                \end{tabular}\\[6pt]
+                \scriptsize Ahuja et al.\ 2022 (MEGA / XGLM, BLOOM, PaLM, 15-bin equal-width)
+            \end{block}
+            \vspace{0.2cm}
+            \takeaway{Models are confidently wrong in non-English contexts.}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{We don't claim a monopoly --- three live alternatives}
+    \large
+    \begin{enumerate}
+        \setlength\itemsep{0.5em}
+        \item \textbf{Language-specific microcircuits} \scriptsize (Pires, Schlinger, Garrette 2019 on mBERT)\\
+        \normalsize Some failures persist for specific language pairs. Suggests partially separated subnetworks.
+        \item \textbf{Subspace interference} \scriptsize (XLM-R, mT5 lineage)\\
+        \normalsize Scale alleviates but doesn't eliminate cross-lingual interference. Low-resource langs drift.
+        \item \textbf{Latent-language priors} \scriptsize (Wendler et al., 2024)\\
+        \normalsize Llama decoders pass through an intermediate that is statistically \emph{closer to English} than to the input language.
+    \end{enumerate}
+    \vspace{0.3cm}
+    \begin{block}{The natural test --- runnable \emph{now}}
+        \textbf{Language-prioritised models}: CT-LLM (800B Chinese) and TigerLLM (Bangla).\\[4pt]
+        If the Semantic Hub is about \emph{training data} and not architecture, these should \emph{invert} the asymmetry.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Closing the loop --- from representation to behaviour}
+    \large
+    The link from ``hub asymmetry'' to ``Vietnamese IPD strategy distribution'' is currently \textbf{inferential, not causal}.
+    \vspace{0.3cm}
+    \begin{block}{Why this is fixable now}
+        Recent interpretability work has all the precedent we need:
+        \begin{itemize}
+            \setlength\itemsep{0.2em}
+            \item Spatial reps causally affect prediction \scriptsize (Chen et al., 2023)
+            \item World-model state vars are linearly decodable \emph{and} causally engaged \scriptsize (Zhang, 2026)
+            \item Layer-resolved tools (LogitLens4LLMs, arithmetic-trajectory probes, syntax/semantics probes)
+        \end{itemize}
+    \end{block}
+    \vspace{0.3cm}
+    \takeaway{Next experiment: derive a steering vector from \emph{English} cooperative vs.\ defective IPD play. Apply to the same model in Arabic. Measure the resulting strategy shift.\\This converts a representation claim into a behavioural lever.}
+\end{frame}
+
+% =====================================================
+% PART 4 — TOM AND MODERATORS
+% =====================================================
+\section{Theory of mind across languages}
+
+\begin{frame}{Bilingual children get \emph{better} at ToM. LLMs get worse.}
+    \large
+    \textbf{Human baseline:} bilingual children pass false-belief tasks \emph{earlier} than monolinguals.
+    \scriptsize \itshape (Kovács 2009; Goetz 2003 --- the executive demands of code-switching scaffold ToM.)
+    \vspace{0.3cm}
+    \normalsize\textbf{The implicit prediction for machines:} multilingual models should be \emph{stronger} ToM agents, not weaker.
+    \vspace{0.4cm}
+    \begin{block}{What we actually see}
+        \begin{itemize}
+            \setlength\itemsep{0.3em}
+            \item \textbf{XToM} (Chan et al., 2025): GPT-4o has an 11-point ToM gap between Japanese and Chinese on the same items.
+            \item \textbf{LLM-Hanabi}: when first-order ToM erodes, both \emph{cooperation} and \emph{deception} erode together.
+        \end{itemize}
+    \end{block}
+    \vspace{0.2cm}
+    \footnotesize\itshape Caveat (Ullman 2023; Sap et al.\ 2022): absolute LLM ToM scores are contested. But cross-lingual \emph{differences on parallel items} are well-defined regardless of construct-validity disputes.
+\end{frame}
+
+\begin{frame}{Language is one modulator. There are at least three others.}
+    \large
+    \begin{columns}[T]
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Personality steering}
+                \footnotesize Ong et al.\ (2025).\\
+                Steering Big-Five Agreeableness modulates IPD cooperation \emph{and} increases exploitation susceptibility.\\[4pt]
+                \textit{$\Rightarrow$ Internal reps can causally steer cooperation.}
+            \end{block}
+        \end{column}
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Communication delay}
+                \footnotesize Nishimoto et al.\ (2026).\\
+                U-shaped relationship between delay and cooperation. Agents \emph{spontaneously} exploit slower partners.\\[4pt]
+                \textit{$\Rightarrow$ Infrastructure changes behaviour, no language change.}
+            \end{block}
+        \end{column}
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Partner identity}
+                \footnotesize Jiang et al.\ (2025).\\
+                Human cooperation against an agent depends on its declared identity (human/rule-AI/LLM).\\[4pt]
+                \textit{$\Rightarrow$ Language is one signal that frames identity.}
+            \end{block}
+        \end{column}
+    \end{columns}
+    \vspace{0.4cm}
+    \takeaway{Any clean test of linguistic relativity must hold these three constant. Otherwise we mistake moderator effects for language effects.}
+\end{frame}
+
+% =====================================================
+% PART 5 — EVOLUTIONARY FRAME
+% =====================================================
+\section{Cooperation, evolved or inherited?}
+
+\begin{frame}{LLM cooperation doesn't fit Axelrod's mould}
+    \large
+    \textbf{Axelrod's tradition:} cooperation is an \emph{achievement}.\\
+    Stable cooperation requires repeated interactions, reputation, punishment, network reciprocity.
+    \vspace{0.3cm}
+    \begin{block}{LLMs arrive \emph{pre-cooperative}}
+        Before any game is played:
+        \begin{itemize}
+            \setlength\itemsep{0.2em}
+            \item \textbf{Pretraining corpora} = cumulative cultural products of millions of human authors
+            \item \textbf{RLHF} = a layer of selected human preferences
+        \end{itemize}
+        \vspace{0.2cm}
+        These act as \textbf{cultural inheritance} (Boyd \& Richerson 1985; Henrich 2015).
+    \end{block}
+    \vspace{0.3cm}
+    \takeaway{LLM cooperation is \emph{culturally inherited}, not evolved through interaction. The corollary is testable.}
+\end{frame}
+
+\begin{frame}{The WEIRD problem and the multilingual transmission bottleneck}
+    \large
+    \begin{columns}[T]
+        \begin{column}{0.50\textwidth}
+            \textbf{WEIRD-skewed corpora}\\
+            \footnotesize Henrich, Heine, Norenzayan (2010); Muthukrishna et al.\ (2020):\\[4pt]
+            \normalsize WEIRD populations are \textbf{statistical outliers} on individualism, analytic thinking, fair-procedure framings.
+            \vspace{0.3cm}
+            If LLMs inherit cooperation from these corpora, they encode WEIRD norms while \emph{presenting as universal}.
+            \vspace{0.3cm}
+            \takeaway{Multilingual deployment risks normative imposition --- not just performance gaps.}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \begin{alertblock}{Machines now subject to cultural evolution}
+                \footnotesize LLM populations are linked through:
+                \begin{itemize}
+                    \item Shared benchmarks
+                    \item Shared model families
+                    \item Distillation \& self-training on each other's outputs
+                \end{itemize}
+                \vspace{0.2cm}
+                If the bottleneck is English (lingua franca of benchmarks + RLHF annotators), \textbf{non-English traits drift independently}.
+                \vspace{0.2cm}
+                Empirical signal: the English--Arabic gap in TCG-Bench at 32B parameters is \emph{not} corrected by scale.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =====================================================
+% PART 6 — SOCIETAL STAKES
+% =====================================================
+\section{Society and governance}
+
+\begin{frame}{Three societal consequences --- already shipping}
+    \large
+    \begin{columns}[T]
+        \begin{column}{0.32\textwidth}
+            \begin{alertblock}{Unequal institutional quality}
+                \footnotesize Calibration is $\sim 5\times$ worse outside English.\\[4pt]
+                Public-facing agents in the Global South will offer \emph{confidently wrong} advice to those with fewest alternatives.\\[4pt]
+                Already deployed: UlizaLlama (health, Swahili), Aya Expanse (23 langs incl.\ VI), Bhashini (India).
+            \end{alertblock}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \begin{alertblock}{Uneven attack surface}
+                \footnotesize Code-Switching Red-Teaming (Yoo et al., 2025): \textbf{+46.7\%} attack success by mixing languages at token level.\\[4pt]
+                Agent-in-the-Middle attacks exploit inter-agent channels.\\[4pt]
+                Adversaries gain leverage where safety data is sparsest.
+            \end{alertblock}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \begin{alertblock}{Co-evolution}
+                \footnotesize LLM outputs re-enter human discourse, then future training corpora.\\[4pt]
+                Language-modulated machine defaults shape the text humans write next.\\[4pt]
+                The cultural-inheritance loop becomes \textbf{bidirectional}.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Three governance levers --- no breakthroughs needed}
+    \large
+    \begin{enumerate}
+        \setlength\itemsep{0.5em}
+        \item \textbf{Diversify benchmarks.}\\
+        \normalsize Pair safety benchmarks (M-ALERT) with interactive multi-agent ones (clembench, MultiAgentBench, TCG-Bench). Report behavioural \emph{and} safety gaps \emph{together}.
+
+        \item \textbf{Multilingual RLHF coverage standards.}\\
+        \normalsize Every model card reports annotator composition by language and dialect. Suggested floor: $\geq 5\%$ preference labels per language for any model deployed across $> 5$ languages, with documented dialectal stratification.
+
+        \item \textbf{Audit standards for multi-agent deployments.}\\
+        \normalsize Code-switching probes and Agent-in-the-Middle threat models become a \emph{default} test bed --- the way prompt-injection probes already are for single-agent products.
+    \end{enumerate}
+    \vspace{0.3cm}
+    \takeaway{What is missing is the \emph{institutional infrastructure}, not the methodology.}
+\end{frame}
+
+% =====================================================
+% PART 7 — RESEARCH AGENDA
+% =====================================================
+\section{Four falsifiable predictions}
+
+\begin{frame}{Four predictions, each falsifiable with current methods}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{P1 --- Corpus $\leftrightarrow$ cooperation}
+                \footnotesize Cooperative-discourse density in pretraining corpora $\rho$ IPD cooperation rate across languages.\\
+                Workarounds for closed corpora: open-data models (Pile, CT-LLM, TigerLLM), proxy corpora, controlled small-model runs.\\[4pt]
+                \textbf{Falsifier:} Spearman $\rho$ indistinguishable from 0 across $\geq 8$ languages.
+            \end{block}
+            \vspace{0.2cm}
+            \begin{block}{P2 --- Hub probe + behavioural readout}
+                \footnotesize Probe layers $\lfloor L/3 \rfloor, \lfloor 2L/3 \rfloor$ to classify hub vs.\ realisation failures.\\
+                \textbf{Then:} apply English-derived steering vector to non-English IPD prompt; measure strategy shift.\\[4pt]
+                \textbf{Falsifier:} no behavioural shift after steering.
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{P3 --- Distillation drift}
+                \footnotesize Controlled distillation chain: traits propagate with high fidelity in English, degrade in lower-resource languages.\\[4pt]
+                \textbf{Falsifier:} no degradation $\Rightarrow$ inheritance-via-distillation is wrong.
+            \end{block}
+            \vspace{0.2cm}
+            \begin{block}{P4 --- Evaluation reliability ceiling}
+                \footnotesize Multilingual LLM-as-Judge with $\geq 3$ heterogeneous judges + self-translation + checklist rubrics raises Fleiss' $\kappa > 0.5$.\\[4pt]
+                \textbf{Falsifier:} saturates below $0.5$ $\Rightarrow$ need bilingual human adjudication, not better aggregation.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =====================================================
+% PART 8 — CONCLUSION
+% =====================================================
+\section{Take-aways}
+
+\begin{frame}{Five things to remember}
+    \large
+    \begin{enumerate}
+        \setlength\itemsep{0.5em}
+        \item \textbf{Language modulates machine behaviour.} It is an active variable, not a passive medium.
+        \item \textbf{The mechanism is architectural.} Hub, Barrier, microcircuits, latent-language --- not cultural essentialism.
+        \item \textbf{Cooperation is inherited, not evolved.} Pretraining + RLHF are the inheritance mechanism.
+        \item \textbf{Contradictions are informative.} Persuasion null, cheap-talk dominance, Vietnamese arithmetic errors --- they bound the claim.
+        \item \textbf{Synthesis $\rightarrow$ research agenda.} Four falsifiable predictions; closing the representation--behaviour loop is the most urgent.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Where this sits in the machine-behaviour programme}
+    \large
+    \textbf{Continuous with:}\\
+    \footnotesize Rahwan (machine behaviour) $\cdot$ Han (evolutionary game theory for multi-agent emergence) $\cdot$ Perc (statistical physics of cooperation) $\cdot$ Boyd, Richerson, Henrich (cultural evolution) $\cdot$ Axelrod, Nowak (cooperation without design)
+    \vspace{0.5cm}\\
+    \normalsize\textbf{Distinct contribution:}
+    \begin{itemize}
+        \setlength\itemsep{0.3em}
+        \item Treats \emph{language} as a modulating variable in machine ethology
+        \item Reframes ``nicer than human'' as cultural inheritance, with WEIRD corollaries
+        \item Bridges mechanistic interpretability with population-level cooperation theory
+        \item Supplies an immediately falsifiable agenda
+    \end{itemize}
+    \vspace{0.5cm}
+    \takeaway{Machine populations now offer a new --- uncomfortably consequential --- empirical substrate for the science of cooperation.}
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+        \Huge \textcolor{rsnavy}{\textbf{Thank you}} \\[0.6cm]
+        \large Questions \& discussion \\[0.8cm]
+        \normalsize
+        \textbf{Dao Sy Duy Minh}\\
+        Faculty of Information Technology, University of Science, VNU-HCM\\
+        \texttt{dsdminh22@apcs.fitus.edu.vn}\\[0.8cm]
+        \scriptsize\itshape Babel's Machines --- Linguistic Relativity, Cooperation,\\and the Emerging Behaviour of Multilingual Artificial Agents.\\
+        For the Interface Focus theme issue on machine behaviour in the age of LLMs.
+    \end{center}
+\end{frame}
+
+\end{document}
